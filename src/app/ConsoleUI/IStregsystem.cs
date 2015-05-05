@@ -14,6 +14,6 @@ namespace ConsoleUI
         Product GetProduct(int productId);
         User GetUser(int userId);
         IList<Transaction> GetTransactionList(User user);
-        IList<Product> GetActiveProducts();
+        IEnumerable<Product> GetActiveProducts();
     }
 }

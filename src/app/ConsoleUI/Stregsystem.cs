@@ -1,10 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace ConsoleUI
 {
     public class Stregsystem : IStregsystem
     {
+        private readonly ProductCatalog productCatalog;
+        private readonly UserRepository userRepository;
+
+        public Stregsystem()
+        {
+            // TODO: assume that file encoding is Encoding.Default
+            var reader = new StreamReader("products.csv", Encoding.Default);
+            ProductCatalogImporter importer = new ProductCatalogImporter(reader);
+
+            productCatalog = importer.Import();
+
+            userRepository = new UserRepository();
+            userRepository.Add(new User(1, "Joakim", "Von And") { Balance = int.MaxValue, UserName = "vonand"});
+            userRepository.Add(new User(2, "Anders", "And") { Balance = 100, UserName = "andersand" });
+        }
+
         public void BuyProduct(User user, Product product)
         {
             if (user == null) throw new ArgumentNullException("user");
@@ -26,10 +44,15 @@ namespace ConsoleUI
 
         public Product GetProduct(int productId)
         {
-            if (false)
+            if (productId < 1)
+                throw new ArgumentOutOfRangeException("productId", productId, "Product id cannot be below 1.");
+
+            Product product = productCatalog.TryFindById(productId);
+
+            if (product == null)
                 throw new RecordNotFoundException("Product", productId);
-            
-            throw new System.NotImplementedException();
+
+            return product;
         }
 
         public User GetUser(int userId)
@@ -47,9 +70,9 @@ namespace ConsoleUI
             throw new System.NotImplementedException();
         }
 
-        public IList<Product> GetActiveProducts()
+        public IEnumerable<Product> GetActiveProducts()
         {
-            throw new System.NotImplementedException();
+            return productCatalog.GetActiveProducts();
         }
     }
 }

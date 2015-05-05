@@ -5,33 +5,29 @@ namespace ConsoleUI
 {
     public class Product
     {
-        private int productId;
-        private string name;
-        // TODO: Must be unique
-        public int ProductID
+        public Product(int productId, string name, int price, bool active = true)
         {
-            get { return productId; }
-            set
-            {
-                if (value < 1)
-                    throw new ArgumentException("Product ID must not be lower than 1.");
-                productId = value;
-            }
+            if (productId < 1)
+                throw new ArgumentException("Product ID cannot not be lower than 1.", "productId");
+
+            if (name == null) 
+                throw new ArgumentNullException("name");
+            
+            ProductID = productId;
+            Name = name;
+            Price = price;
+            Active = active;
         }
 
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentException("Name cannot be null.");
-                name = value;
-            }
-        }
-
+        public int ProductID { get; set; }
+        public string Name { get; set; }
         public int Price { get; set; }
         public virtual bool Active { get; set; }
         public bool CanBeBoughtOnCredit { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("{0} {1} {2}", ProductID, Name, Price);
+        }
     }
 }

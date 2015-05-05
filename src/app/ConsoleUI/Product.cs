@@ -30,7 +30,7 @@ namespace ConsoleUI
             }
         }
 
-        public double Price { get; set; }
+        public int Price { get; set; }
         public virtual bool Active { get; set; }
         public bool CanBeBoughtOnCredit { get; set; }
     }

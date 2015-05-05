@@ -3,10 +3,6 @@ using System.Diagnostics;
 
 namespace ConsoleUI
 {
-    public class SeasonalProduct : Product
-    {
-        public DateTime Season { get; set; }
-    }
     public class Product
     {
         private int productId;
@@ -35,7 +31,7 @@ namespace ConsoleUI
         }
 
         public double Price { get; set; }
-        public bool Active { get; set; }
+        public virtual bool Active { get; set; }
         public bool CanBeBoughtOnCredit { get; set; }
     }
 }

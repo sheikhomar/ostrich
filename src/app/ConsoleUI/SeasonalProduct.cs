@@ -6,6 +6,11 @@ namespace ConsoleUI
     {
         private bool active;
 
+        public SeasonalProduct(int productId, string name, int price)
+            : base(productId, name, price)
+        {
+        }
+
         public DateTime? SeasonStartsAt { get; set; }
         public DateTime? SeasonEndsAt { get; set; }
 

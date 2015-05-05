@@ -16,16 +16,17 @@ namespace ConsoleUI
 
         public void Start(StregsystemCommandParser parser)
         {
-            var activeProducts = stregsystem.GetActiveProducts();
-            foreach (var product in activeProducts)
+            do
             {
-                Console.WriteLine("Product: {0}", product);
-            }
+                var activeProducts = stregsystem.GetActiveProducts();
+                Console.WriteLine("Active products:");
+                foreach (var product in activeProducts)
+                    Console.WriteLine("{0,5}\t{1,50}\t{2,5}", product.ProductID, product.Name, product.Price);
 
-            Console.WriteLine("Application started. Please type a command: ");
-            string command = Console.ReadLine();
-            parser.Parse(command);
-            Console.ReadKey();
+                Console.WriteLine();
+                Console.Write("Your command is my will # ");
+                parser.Parse(Console.ReadLine());
+            } while (true);
         }
 
         public void DisplayUserNotFound()

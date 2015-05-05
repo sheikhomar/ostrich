@@ -4,43 +4,27 @@ namespace ConsoleUI
 {
     public class User : IComparable<User>
     {
-        private string firstName;
-        private string lastName;
         private string userName;
         private string email;
-        private double balance;
+        private int balance;
 
-        public User(int userId, string firstName)
+        public User(int userId, string firstName, string lastName)
         {
+            if (firstName == null) 
+                throw new ArgumentNullException("firstName");
+            if (lastName == null) 
+                throw new ArgumentNullException("lastName");
+
             UserID = userId;
             FirstName = firstName;
-
+            LastName = lastName;
         }
 
-        // TODO: Must be unique
         public int UserID { get; set; }
 
-        public string FirstName
-        {
-            get { return firstName; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("First name cannot be null.");
-                firstName = value;
-            }
-        }
+        public string FirstName { get; set; }
 
-        public string LastName
-        {
-            get { return lastName; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("Last name cannot be null.");
-                lastName = value;
-            }
-        }
+        public string LastName { get; set; }
 
         public string UserName
         {
@@ -64,12 +48,12 @@ namespace ConsoleUI
             }
         }
 
-        public double Balance
+        public int Balance
         {
             get { return balance; }
             set
             {
-                if (!IsBalanceValid(value))
+                if (!IsNewBalanceValid(value))
                     throw new ArgumentException("Balance is not valid.");
                 
                 balance = value;
@@ -99,7 +83,7 @@ namespace ConsoleUI
             return string.Format("{0} {1} ({2})", FirstName, LastName, Email);
         }
 
-        private bool IsBalanceValid(double input)
+        private bool IsNewBalanceValid(int input)
         {
             return true;
         }

@@ -15,6 +15,14 @@ namespace ostrich.ConsoleUI
             Product = product;
         }
 
+        /// <summary>
+        /// Returns whether this transaction can be executed without raising an exception.
+        /// </summary>
+        public bool IsValid
+        {
+            get { return User.Balance > Amount && Product.Active; }
+        }
+
         public override void Execute()
         {
             if (User.Balance < Amount)

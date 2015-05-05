@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuyTransaction.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="InsertCashTransaction.cs" />
     <Compile Include="InsufficientCreditsException.cs" />

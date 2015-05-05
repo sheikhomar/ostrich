@@ -27,19 +27,19 @@ namespace ConsoleUI
 
         public void Parse(string stringToParse)
         {
-            if (!string.IsNullOrWhiteSpace(stringToParse))
+            Command cmd = new Command(stringToParse);
+            if (cmd.IsAdminCommand)
             {
-                string[] arr = stringToParse.Split(' ');
-                if (arr.Length > 1)
-                {
-                    string command = arr[0];
-                    int commandArg;
-
-                    if (int.TryParse(arr[1], out commandArg) && commands.ContainsKey(command))
-                    {
-                        commands[command](commandArg);
-                    }
-                }
+                if (":q".Equals(cmd.Name) || ":quit".Equals(cmd.Name))
+                    ui.Close();
+                else if (commands.ContainsKey(cmd.Name) && cmd.Argument.HasValue)
+                    commands[cmd.Name](cmd.Argument.Value);
+                else
+                    ui.DisplayGeneralError("Invalid administration command.");
+            }
+            else
+            {
+                // TODO: Non administrative actions.
             }
         }
 

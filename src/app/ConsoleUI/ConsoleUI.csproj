@@ -47,6 +47,7 @@
     <Compile Include="IStregsystem.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="InactiveProductException.cs" />
+    <Compile Include="RecordNotFoundException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeasonalProduct.cs" />

@@ -25,6 +25,11 @@ namespace ConsoleUI
         public virtual bool Active { get; set; }
         public bool CanBeBoughtOnCredit { get; set; }
 
+        public string FormattedPrice
+        {
+            get { return String.Format("{0:N2} kr.", Price/100); }
+        }
+
         public override string ToString()
         {
             return String.Format("{0} {1} {2}", ProductID, Name, Price);

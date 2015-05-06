@@ -11,7 +11,7 @@ namespace ConsoleUI
     {
         private readonly IUserInterface ui;
         private readonly IStregsystem stregsystem;
-        private readonly IDictionary<string, Action<int>> commands;
+        private readonly IDictionary<string, Action<Command>> commands;
 
         public StregsystemCommandParser(IUserInterface ui, IStregsystem stregsystem)
         {
@@ -21,10 +21,13 @@ namespace ConsoleUI
             this.ui = ui;
             this.stregsystem = stregsystem;
 
-            commands = new Dictionary<string, Action<int>>
+            commands = new Dictionary<string, Action<Command>>
             {
                 {":activate", ActivateProduct},
                 {":deactivate", DeactivateProduct},
+                {":list-products", ListProducts}, {":p", ListProducts},
+                {":list-users", ListUsers}, {":u", ListUsers},
+                {":quit", Quit}, {":q", Quit},
             };
         }
 
@@ -111,32 +114,46 @@ namespace ConsoleUI
 
         private void ProcessAdminCommand(Command cmd)
         {
-            int? argument = cmd.GetInt(1);
-
-            if (":q".Equals(cmd.Name) || ":quit".Equals(cmd.Name))
-                ui.Close();
-            else if (commands.ContainsKey(cmd.Name) && argument.HasValue)
-                commands[cmd.Name](argument.Value);
+            if (commands.ContainsKey(cmd.Name))
+                commands[cmd.Name](cmd);
             else
                 ui.DisplayAdminCommandNotFoundMessage(cmd);
         }
 
-        private void ActivateProduct(int productId)
+        private void ActivateProduct(Command command)
         {
+            int productId = command.GetInt(1).Value;
             Product product = stregsystem.GetProduct(productId);
-            if (product.Active)
-                ui.DisplayGeneralError(String.Format("Product {0} is already active.", product.ProductID));
-            else
-                product.Active = true;
+            product.Active = true;
         }
 
-        private void DeactivateProduct(int productId)
+        private void DeactivateProduct(Command command)
         {
+            int productId = command.GetInt(1).Value;
             Product product = stregsystem.GetProduct(productId);
-            if (!product.Active)
-                ui.DisplayGeneralError(String.Format("Product '{0}' is not active.", product.ProductID));
-            else
-                product.Active = false;
+            product.Active = false;
+        }
+
+        private void ListProducts(Command command)
+        {
+            var activeProducts = stregsystem.GetActiveProducts();
+            Console.WriteLine("Active products:");
+            foreach (var product in activeProducts)
+                Console.WriteLine("{0,5}\t{1,50}\t{2,5}", product.ProductID, product.Name, product.Price);
+
+        }
+
+        private void ListUsers(Command command)
+        {
+            var users = stregsystem.GetUsers();
+            Console.WriteLine("Users:");
+            foreach (var product in users)
+                Console.WriteLine("{0}", product);
+        }
+
+        private void Quit(Command command)
+        {
+            ui.Close();
         }
     }
 }

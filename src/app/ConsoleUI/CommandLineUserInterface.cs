@@ -16,15 +16,10 @@ namespace ConsoleUI
 
         public void Start(StregsystemCommandParser parser)
         {
+            Console.WriteLine("Your wish is my command.");
             do
             {
-                var activeProducts = stregsystem.GetActiveProducts();
-                Console.WriteLine("Active products:");
-                foreach (var product in activeProducts)
-                    Console.WriteLine("{0,5}\t{1,50}\t{2,5}", product.ProductID, product.Name, product.Price);
-
-                Console.WriteLine();
-                Console.Write("Your command is my will # ");
+                Console.Write("# ");
                 parser.Parse(Console.ReadLine());
             } while (true);
         }

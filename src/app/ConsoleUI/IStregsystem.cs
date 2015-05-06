@@ -16,5 +16,6 @@ namespace ConsoleUI
         User GetUser(string userName);
         IEnumerable<Transaction> GetTransactionList(User user);
         IEnumerable<Product> GetActiveProducts();
+        IEnumerable<User> GetUsers();
     }
 }

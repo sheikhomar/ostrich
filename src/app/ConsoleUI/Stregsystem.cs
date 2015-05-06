@@ -11,7 +11,7 @@ namespace ConsoleUI
     {
         private readonly ProductCatalog productCatalog;
         private readonly UserRepository userRepository;
-        private IList<Transaction> transactions;
+        private readonly IList<Transaction> transactions;
 
         public Stregsystem()
         {
@@ -85,6 +85,11 @@ namespace ConsoleUI
         public IEnumerable<Product> GetActiveProducts()
         {
             return productCatalog.GetActiveProducts();
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return userRepository.GetUsers();
         }
     }
 }

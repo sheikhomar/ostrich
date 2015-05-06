@@ -25,7 +25,7 @@ namespace ConsoleUI
 
             userRepository = new UserRepository();
             userRepository.Add(new User(1, "Joakim", "Von And") { Balance = int.MaxValue, UserName = "b"});
-            userRepository.Add(new User(2, "Anders", "And") { Balance = 100, UserName = "a" });
+            userRepository.Add(new User(2, "Anders", "And") { Balance = 6000, UserName = "a" });
         }
 
         public BuyTransaction BuyProduct(User user, Product product)

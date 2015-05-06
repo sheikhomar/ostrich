@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using ostrich.ConsoleUI;
 
 namespace ConsoleUI
@@ -43,11 +44,25 @@ namespace ConsoleUI
         {
             Console.WriteLine("User Details");
             Console.WriteLine(" Username: {0}\nFull name: {1}\nBalance: {2}", user.UserName, user.FullName, user.Balance);
-            Console.WriteLine("Recent buy transactions");
-            foreach (BuyTransaction transaction in latestTransactions)
+
+            if (user.HasLowBalance)
             {
-                Console.WriteLine(" -> {0}", transaction);
+                var foregroundColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("  User has low balance.");
+                Console.ForegroundColor = foregroundColor;
             }
+
+            if (latestTransactions.Any())
+            {
+                Console.WriteLine("Recent buy transactions");
+                foreach (BuyTransaction transaction in latestTransactions)
+                {
+                    Console.WriteLine(" -> {0}", transaction);
+                }    
+            }
+
+            
         }
 
         public void DisplayTooManyArgumentsError()

@@ -60,6 +60,11 @@ namespace ConsoleUI
             }
         }
 
+        public bool HasLowBalance
+        {
+            get { return Balance < 5000; }
+        }
+
         public string FullName
         {
             get { return string.Format("{0} {1}", FirstName, LastName); }

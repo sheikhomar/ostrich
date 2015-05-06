@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using ostrich.ConsoleUI;
 
 namespace ConsoleUI
 {
@@ -19,15 +21,16 @@ namespace ConsoleUI
             productCatalog = importer.Import();
 
             userRepository = new UserRepository();
-            userRepository.Add(new User(1, "Joakim", "Von And") { Balance = int.MaxValue, UserName = "vonand"});
-            userRepository.Add(new User(2, "Anders", "And") { Balance = 100, UserName = "andersand" });
+            userRepository.Add(new User(1, "Joakim", "Von And") { Balance = int.MaxValue, UserName = "b"});
+            userRepository.Add(new User(2, "Anders", "And") { Balance = 100, UserName = "a" });
         }
 
-        public void BuyProduct(User user, Product product)
+        public BuyTransaction BuyProduct(User user, Product product)
         {
             if (user == null) throw new ArgumentNullException("user");
             if (product == null) throw new ArgumentNullException("product");
-            throw new System.NotImplementedException();
+            
+            return new BuyTransaction(1, user, DateTime.Now, product, product.Price * -1);
         }
 
         public void AddCreditsToAccount(User user, int amount)
@@ -39,7 +42,8 @@ namespace ConsoleUI
         public void ExecuteTransaction(Transaction transaction)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
-            throw new System.NotImplementedException();
+
+            transaction.Execute();
         }
 
         public Product GetProduct(int productId)
@@ -55,12 +59,14 @@ namespace ConsoleUI
             return product;
         }
 
-        public User GetUser(int userId)
+        public User GetUser(string userName)
         {
-            if (false)
-                throw new RecordNotFoundException("User", userId);
+            var user = userRepository.GetUsers().FirstOrDefault(u => u.UserName == userName);
 
-            throw new System.NotImplementedException();
+            if (user == null)
+                throw new UserNotFoundException(userName);
+
+            return user;
         }
 
         public IList<Transaction> GetTransactionList(User user)

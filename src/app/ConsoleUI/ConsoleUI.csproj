@@ -49,9 +49,9 @@
     <Compile Include="IStregsystem.cs" />
     <Compile Include="IUserInterface.cs" />
     <Compile Include="Product.cs" />
-    <Compile Include="InactiveProductException.cs" />
     <Compile Include="ProductCatalog.cs" />
     <Compile Include="ProductCatalogImporter.cs" />
+    <Compile Include="ProductNotSaleableException.cs" />
     <Compile Include="RecordNotFoundException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +61,7 @@
     <Compile Include="StregsystemCommandParser.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserNotFoundException.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

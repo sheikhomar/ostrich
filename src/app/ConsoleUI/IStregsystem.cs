@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+using ostrich.ConsoleUI;
 
 namespace ConsoleUI
 {
     public interface IStregsystem
     {
-        void BuyProduct(User user, Product product);
+        BuyTransaction BuyProduct(User user, Product product);
         void AddCreditsToAccount(User user, int amount);
         void ExecuteTransaction(Transaction transaction);
         Product GetProduct(int productId);
-        User GetUser(int userId);
+        User GetUser(string userName);
         IList<Transaction> GetTransactionList(User user);
         IEnumerable<Product> GetActiveProducts();
     }

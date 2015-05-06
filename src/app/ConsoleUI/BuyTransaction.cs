@@ -29,7 +29,9 @@ namespace ostrich.ConsoleUI
                 throw new InsufficientCreditsException(User, Product);
 
             if (!Product.Active)
-                throw new InactiveProductException(User, Product);
+                throw new ProductNotSaleableException(User, Product);
+
+            User.Balance += Amount;
         }
     }
 }

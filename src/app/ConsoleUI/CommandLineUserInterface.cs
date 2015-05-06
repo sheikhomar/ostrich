@@ -29,19 +29,24 @@ namespace ConsoleUI
             } while (true);
         }
 
-        public void DisplayUserNotFound()
+        public void DisplayUserNotFound(UserNotFoundException exception)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("User '{0}' was not found.", exception.UserName);
         }
 
-        public void DisplayProductNotFound()
+        public void DisplayProductNotFound(int productId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public void DisplayUserInfo()
+        public void DisplayProductNotFound(RecordNotFoundException exception)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Product '{0}' was not found.", exception.ProductID);
+        }
+
+        public void DisplayUserInfo(User user)
+        {
+            Console.WriteLine("User Details: {0}", user);
         }
 
         public void DisplayTooManyArgumentsError()
@@ -49,14 +54,14 @@ namespace ConsoleUI
             throw new System.NotImplementedException();
         }
 
-        public void DisplayAdminCommandNotFoundMessage()
+        public void DisplayAdminCommandNotFoundMessage(Command cmd)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Administration command '{0}' is not valid.", cmd.Name);
         }
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("User\n  {0}\nhas bought\n  {1}", transaction.User, transaction.Product);
         }
 
         public void DisplayUserBuysProduct(int count)
@@ -70,14 +75,20 @@ namespace ConsoleUI
             Environment.Exit(0);
        }
 
-        public void DisplayInsufficientCash()
+        public void DisplayInsufficientCash(InsufficientCreditsException exception)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("User {0} has insufficient funds to buy product {1} that costs {2}", 
+                exception.User, exception.Product, exception.Product.Price);
         }
 
         public void DisplayGeneralError(string errorString)
         {
             Console.WriteLine(errorString);
+        }
+
+        public void DisplayProductNotSaleable(ProductNotSaleableException exception)
+        {
+            Console.WriteLine(exception.Message);
         }
     }
 }

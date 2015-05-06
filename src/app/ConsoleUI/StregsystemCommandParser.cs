@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
+using ostrich.ConsoleUI;
 
 namespace ConsoleUI
 {
@@ -27,20 +28,67 @@ namespace ConsoleUI
 
         public void Parse(string stringToParse)
         {
+            if (string.IsNullOrWhiteSpace(stringToParse))
+            {
+                ui.DisplayGeneralError("Invalid command detected.");
+                return;
+            }
+
             Command cmd = new Command(stringToParse);
             if (cmd.IsAdminCommand)
-            {
-                if (":q".Equals(cmd.Name) || ":quit".Equals(cmd.Name))
-                    ui.Close();
-                else if (commands.ContainsKey(cmd.Name) && cmd.Argument.HasValue)
-                    commands[cmd.Name](cmd.Argument.Value);
-                else
-                    ui.DisplayGeneralError("Invalid administration command.");
-            }
+                ProcessAdminCommand(cmd);
             else
+                ProcessQuickbuyCommand(cmd);
+        }
+
+        private void ProcessQuickbuyCommand(Command cmd)
+        {
+            string userName = cmd.Name;
+            
+            if (!cmd.Argument.HasValue)
             {
-                // TODO: Non administrative actions.
+                string msg = string.Format("Please specify which product ID to buy. Example '{0} 11'", userName);
+                ui.DisplayGeneralError(msg);
+                return;
             }
+
+            int productId = cmd.Argument.Value;
+            try
+            {
+                User user = stregsystem.GetUser(userName);
+                Product product = stregsystem.GetProduct(productId);
+                BuyTransaction transaction = stregsystem.BuyProduct(user, product);
+
+                stregsystem.ExecuteTransaction(transaction);
+
+                ui.DisplayUserBuysProduct(transaction);
+            }
+            catch (UserNotFoundException exception)
+            {
+                ui.DisplayUserNotFound(exception);
+            }
+            catch (RecordNotFoundException exception)
+            {
+                ui.DisplayProductNotFound(exception);
+            }
+            catch (InsufficientCreditsException exception)
+            {
+                ui.DisplayInsufficientCash(exception);
+            }
+            catch (ProductNotSaleableException exception)
+            {
+                ui.DisplayProductNotSaleable(exception);
+            }
+        }
+
+        private void ProcessAdminCommand(Command cmd)
+        {
+            if (":q".Equals(cmd.Name) || ":quit".Equals(cmd.Name))
+                ui.Close();
+            else if (commands.ContainsKey(cmd.Name) && cmd.Argument.HasValue)
+                commands[cmd.Name](cmd.Argument.Value);
+            else
+                ui.DisplayAdminCommandNotFoundMessage(cmd);
         }
 
         private void ActivateProduct(int productId)

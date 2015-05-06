@@ -80,7 +80,7 @@ namespace ConsoleUI
 
         public override string ToString()
         {
-            return string.Format("{0} {1} ({2})", FirstName, LastName, Email);
+            return string.Format("{0} {1} ({2}) Balance={3}", FirstName, LastName, UserName, Balance);
         }
 
         private bool IsNewBalanceValid(int input)

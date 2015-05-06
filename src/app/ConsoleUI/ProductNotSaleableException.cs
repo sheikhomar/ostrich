@@ -3,9 +3,9 @@ using ConsoleUI;
 
 namespace ostrich.ConsoleUI
 {
-    public class InactiveProductException : Exception
+    public class ProductNotSaleableException : Exception
     {
-        public InactiveProductException(User user, Product product)
+        public ProductNotSaleableException(User user, Product product)
             : base(string.Format("User '{0}' tried to buy inactive product '{1}'", user.UserID, product.ProductID))
         {
             

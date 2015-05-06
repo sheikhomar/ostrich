@@ -23,12 +23,14 @@ namespace ConsoleUI
 
             commands = new Dictionary<string, Action<Command>>
             {
-                {":activate", ActivateProduct},
-                {":deactivate", DeactivateProduct},
+                {":activate", cmd => ToggleActivePropertyForProduct(cmd, true)},
+                {":deactivate", cmd => ToggleActivePropertyForProduct(cmd, false)},
                 {":list-products", ListProducts}, {":p", ListProducts},
                 {":list-users", ListUsers}, {":u", ListUsers},
                 {":addcredits", AddCredits},
-                {":quit", Quit}, {":q", Quit},
+                {":crediton", cmd => ToggleBuyOnCreditForProduct(cmd, true)},
+                {":creditoff", cmd => ToggleBuyOnCreditForProduct(cmd, false)},
+                {":quit", cmd => ui.Close()}, {":q", cmd => ui.Close()},
             };
         }
 
@@ -160,18 +162,30 @@ namespace ConsoleUI
                 ui.DisplayAdminCommandNotFoundMessage(cmd);
         }
 
-        private void ActivateProduct(Command command)
+        private void ToggleActivePropertyForProduct(Command command, bool isActive)
         {
-            int productId = command.GetInt(1).Value;
-            Product product = stregsystem.GetProduct(productId);
-            product.Active = true;
-        }
+            if (command.RawArguments.Length != 2)
+            {
+                ui.DisplayGeneralError("Wrong arguments. Must be like ':[de]activate <product-id>'");
+                return;
+            }
 
-        private void DeactivateProduct(Command command)
-        {
-            int productId = command.GetInt(1).Value;
-            Product product = stregsystem.GetProduct(productId);
-            product.Active = false;
+            int? productId = command.GetInt(1);
+            if (productId == null || productId.Value < 1)
+            {
+                ui.DisplayGeneralError("Product ID must be a positive integer.");
+                return;
+            }
+
+            try
+            {
+                Product product = stregsystem.GetProduct(productId.Value);
+                product.Active = isActive;
+            }
+            catch (RecordNotFoundException exception)
+            {
+                ui.DisplayProductNotFound(exception);
+            }
         }
 
         private void ListProducts(Command command)
@@ -183,23 +197,18 @@ namespace ConsoleUI
         private void ListUsers(Command command)
         {
             var users = stregsystem.GetUsers();
-        }
-
-        private void Quit(Command command)
-        {
-            ui.Close();
             ui.DisplayUsers(users);
         }
 
-        private void AddCredits(Command commad)
+        private void AddCredits(Command command)
         {
-            if (commad.RawArguments.Length != 3)
+            if (command.RawArguments.Length != 3)
             {
                 ui.DisplayGeneralError("Wrong arguments. Must be like ':addcredits <user-name> <product-id>'");
                 return;
             }
 
-            int? amount = commad.GetInt(2);
+            int? amount = command.GetInt(2);
             if (amount == null || amount.Value < 1) 
             { 
                 ui.DisplayGeneralError("Amount must be a positive integer.");
@@ -208,7 +217,7 @@ namespace ConsoleUI
 
             try
             {
-                string userName = commad.RawArguments[1];
+                string userName = command.RawArguments[1];
                 User user = stregsystem.GetUser(userName);
                 
                 InsertCashTransaction transaction = stregsystem.AddCreditsToAccount(user, amount.Value);
@@ -218,6 +227,32 @@ namespace ConsoleUI
             catch (UserNotFoundException exception)
             {
                 ui.DisplayUserNotFound(exception);
+            }
+        }
+
+        private void ToggleBuyOnCreditForProduct(Command command, bool canBeBoughtOnCredit)
+        {
+            if (command.RawArguments.Length != 2)
+            {
+                ui.DisplayGeneralError("Wrong arguments. Must be like ':credit[on|off] <product-id>'");
+                return;
+            }
+
+            int? productId = command.GetInt(1);
+            if (productId == null || productId.Value < 1)
+            {
+                ui.DisplayGeneralError("Product ID must be a positive integer.");
+                return;
+            }
+
+            try
+            {
+                Product product = stregsystem.GetProduct(productId.Value);
+                product.CanBeBoughtOnCredit = canBeBoughtOnCredit;
+            }
+            catch (RecordNotFoundException exception)
+            {
+                ui.DisplayProductNotFound(exception);
             }
         }
     }

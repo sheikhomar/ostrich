@@ -42,15 +42,19 @@ namespace ConsoleUI
 
         public void DisplayUserInfo(User user, IEnumerable<BuyTransaction> latestTransactions)
         {
-            Console.WriteLine("User Details");
-            Console.WriteLine(" Username: {0}\nFull name: {1}\nBalance: {2}", user.UserName, user.FullName, user.Balance);
+            Console.Write("User Details\n Username: {0}\n Full name: {1}\n Balance: {2}", 
+                user.UserName, user.FullName, user.Balance);
 
             if (user.HasLowBalance)
             {
                 var foregroundColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("  User has low balance.");
+                Console.WriteLine("  (low balance)");
                 Console.ForegroundColor = foregroundColor;
+            }
+            else
+            {
+                Console.WriteLine();
             }
 
             if (latestTransactions.Any())
@@ -91,8 +95,8 @@ namespace ConsoleUI
 
         public void DisplayInsufficientCash(InsufficientCreditsException exception)
         {
-            Console.WriteLine("User {0} has insufficient funds to buy product {1} that costs {2}", 
-                exception.User, exception.Product, exception.Product.Price);
+            Console.WriteLine("User '{0}' has insufficient funds to buy '{1}' that costs {2}.", 
+                exception.User.UserName, exception.Product.Name, exception.Product.Price);
         }
 
         public void DisplayGeneralError(string errorString)

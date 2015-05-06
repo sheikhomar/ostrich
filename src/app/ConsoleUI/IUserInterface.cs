@@ -6,7 +6,7 @@ namespace ConsoleUI
     public interface IUserInterface
     {
         void DisplayUserNotFound(UserNotFoundException exception);
-        void DisplayProductNotFound(RecordNotFoundException exception);
+        void DisplayProductNotFound(ProductNotFoundException exception);
         void DisplayUserInfo(User user, IEnumerable<BuyTransaction> latestTransactions);
         void DisplayTooManyArgumentsError();
         void DisplayAdminCommandNotFoundMessage(Command cmd);

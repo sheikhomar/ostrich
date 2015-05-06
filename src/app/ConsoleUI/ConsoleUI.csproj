@@ -52,7 +52,7 @@
     <Compile Include="ProductCatalog.cs" />
     <Compile Include="ProductCatalogImporter.cs" />
     <Compile Include="ProductNotSaleableException.cs" />
-    <Compile Include="RecordNotFoundException.cs" />
+    <Compile Include="ProductNotFoundException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeasonalProduct.cs" />

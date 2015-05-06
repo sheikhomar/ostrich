@@ -51,7 +51,7 @@ namespace ConsoleUI
             Product product = productCatalog.TryFindById(productId);
 
             if (product == null)
-                throw new RecordNotFoundException("Product", productId);
+                throw new ProductNotFoundException(productId);
 
             return product;
         }

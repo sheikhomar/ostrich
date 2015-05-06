@@ -35,7 +35,7 @@ namespace ConsoleUI
             throw new NotImplementedException();
         }
 
-        public void DisplayProductNotFound(RecordNotFoundException exception)
+        public void DisplayProductNotFound(ProductNotFoundException exception)
         {
             Console.WriteLine("Product '{0}' was not found.", exception.ProductID);
         }

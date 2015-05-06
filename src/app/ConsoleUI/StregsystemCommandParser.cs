@@ -109,7 +109,7 @@ namespace ConsoleUI
                 ui.DisplayUserNotFound(exception);
                 return false;
             }
-            catch (RecordNotFoundException exception)
+            catch (ProductNotFoundException exception)
             {
                 ui.DisplayProductNotFound(exception);
                 return false;
@@ -182,7 +182,7 @@ namespace ConsoleUI
                 Product product = stregsystem.GetProduct(productId.Value);
                 product.Active = isActive;
             }
-            catch (RecordNotFoundException exception)
+            catch (ProductNotFoundException exception)
             {
                 ui.DisplayProductNotFound(exception);
             }
@@ -250,7 +250,7 @@ namespace ConsoleUI
                 Product product = stregsystem.GetProduct(productId.Value);
                 product.CanBeBoughtOnCredit = canBeBoughtOnCredit;
             }
-            catch (RecordNotFoundException exception)
+            catch (ProductNotFoundException exception)
             {
                 ui.DisplayProductNotFound(exception);
             }

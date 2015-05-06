@@ -87,6 +87,11 @@ namespace ConsoleUI
             }
 
             int productId = argument.Value;
+            PerformBuy(userName, productId);
+        }
+
+        private bool PerformBuy(string userName, int productId)
+        {
             try
             {
                 User user = stregsystem.GetUser(userName);
@@ -100,24 +105,51 @@ namespace ConsoleUI
             catch (UserNotFoundException exception)
             {
                 ui.DisplayUserNotFound(exception);
+                return false;
             }
             catch (RecordNotFoundException exception)
             {
                 ui.DisplayProductNotFound(exception);
+                return false;
             }
             catch (InsufficientCreditsException exception)
             {
                 ui.DisplayInsufficientCash(exception);
+                return false;
             }
             catch (ProductNotSaleableException exception)
             {
                 ui.DisplayProductNotSaleable(exception);
+                return false;
             }
+
+            return true;
         }
-        
+
         private void ProcessMultiBuyCommand(Command cmd)
         {
-            ui.DisplayGeneralError("MultiBuy is not implemented yet.");
+            string userName = cmd.Name;
+            int? quantity = cmd.GetInt(1);
+            int? productId = cmd.GetInt(2);
+
+            if (!quantity.HasValue && quantity.Value < 1)
+            {
+                ui.DisplayGeneralError("Please specify valid quantity.");
+                return;
+            }
+
+            if (!productId.HasValue && productId.Value < 2)
+            {
+                ui.DisplayGeneralError("Please specify valid product ID.");
+                return;
+            }
+
+            for (int i = 0; i < quantity.Value; i++)
+            {
+                bool isSuccess = PerformBuy(userName, productId.Value);
+                if (!isSuccess)
+                    break;
+            }
         }
 
         private void ProcessAdminCommand(Command cmd)

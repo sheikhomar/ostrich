@@ -25,13 +25,15 @@ namespace ostrich.ConsoleUI
 
         public override void Execute()
         {
-            if (User.Balance < Amount)
+            int newUserBalance = User.Balance - Product.Price;
+
+            if (newUserBalance < 0)
                 throw new InsufficientCreditsException(User, Product);
 
             if (!Product.Active)
                 throw new ProductNotSaleableException(User, Product);
 
-            User.Balance += Amount;
+            User.Balance = newUserBalance;
         }
 
         public override string ToString()

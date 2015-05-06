@@ -61,8 +61,6 @@ namespace ConsoleUI
                     Console.WriteLine(" -> {0}", transaction);
                 }    
             }
-
-            
         }
 
         public void DisplayTooManyArgumentsError()

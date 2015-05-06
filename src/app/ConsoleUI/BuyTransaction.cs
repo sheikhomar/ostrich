@@ -33,5 +33,10 @@ namespace ostrich.ConsoleUI
 
             User.Balance += Amount;
         }
+
+        public override string ToString()
+        {
+            return String.Format("{0} User '{1}' has bought '{2}'", base.ToString(), User.UserName, Product.Name);
+        }
     }
 }

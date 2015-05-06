@@ -1,3 +1,6 @@
+using System;
+using System.Security.AccessControl;
+
 namespace ConsoleUI
 {
     public class Command
@@ -6,31 +9,38 @@ namespace ConsoleUI
         {
             if (!string.IsNullOrWhiteSpace(inputCommand))
             {
-                string[] arr = inputCommand.Split(' ');
-                if (arr.Length > 1)
-                {
-                    Name = arr[0];
-                    int commandArg;
-
-                    if (int.TryParse(arr[1], out commandArg))
-                    {
-                        Argument = commandArg;
-                    }
-                }
-                else
-                {
-                    Name = inputCommand;
-                }
+                RawArguments = inputCommand.Split(' ');
+                Name = RawArguments.Length > 1 ? RawArguments[0] : inputCommand;
+            }
+            else
+            {
+                RawArguments = new string[0];
+                Name = String.Empty;
             }
         }
 
         public string Name { get; private set; }
+        
 
-        public int? Argument { get; private set; }
+        public string[] RawArguments { get; set; }
 
         public bool IsAdminCommand
         {
             get { return !string.IsNullOrWhiteSpace(Name) && Name.StartsWith(":"); }
+        }
+
+        public int? GetInt(int argumentIndex)
+        {
+            int? returnVal = null;
+
+            if (argumentIndex > 0 && argumentIndex < RawArguments.Length)
+            {
+                int tempVal;
+                if (int.TryParse(RawArguments[argumentIndex], out tempVal))
+                    returnVal = tempVal;
+            }
+            
+            return returnVal;
         }
     }
 }

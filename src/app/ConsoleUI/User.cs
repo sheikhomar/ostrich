@@ -60,6 +60,18 @@ namespace ConsoleUI
             }
         }
 
+        public string FullName
+        {
+            get { return string.Format("{0} {1}", FirstName, LastName); }
+        }
+
+        public bool Equals(User user)
+        {
+            if (user == null)
+                return false;
+            return user.UserID == UserID;
+        }
+
         public int CompareTo(User other)
         {
             return UserID.CompareTo(other.UserID);
@@ -67,10 +79,7 @@ namespace ConsoleUI
 
         public override bool Equals(object obj)
         {
-            User user = obj as User;
-            if (user != null)
-                return user.UserID == UserID;
-            return false;
+            return Equals(obj as User);
         }
 
         public override int GetHashCode()

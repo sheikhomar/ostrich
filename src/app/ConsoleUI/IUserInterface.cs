@@ -1,4 +1,5 @@
-﻿using ostrich.ConsoleUI;
+﻿using System.Collections.Generic;
+using ostrich.ConsoleUI;
 
 namespace ConsoleUI
 {
@@ -6,7 +7,7 @@ namespace ConsoleUI
     {
         void DisplayUserNotFound(UserNotFoundException exception);
         void DisplayProductNotFound(RecordNotFoundException exception);
-        void DisplayUserInfo(User user);
+        void DisplayUserInfo(User user, IEnumerable<BuyTransaction> latestTransactions);
         void DisplayTooManyArgumentsError();
         void DisplayAdminCommandNotFoundMessage(Command cmd);
         void DisplayUserBuysProduct(BuyTransaction transaction);

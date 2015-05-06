@@ -11,6 +11,7 @@ namespace ConsoleUI
     {
         private readonly ProductCatalog productCatalog;
         private readonly UserRepository userRepository;
+        private IList<Transaction> transactions;
 
         public Stregsystem()
         {
@@ -19,6 +20,8 @@ namespace ConsoleUI
             ProductCatalogImporter importer = new ProductCatalogImporter(reader);
 
             productCatalog = importer.Import();
+
+            transactions = new List<Transaction>();
 
             userRepository = new UserRepository();
             userRepository.Add(new User(1, "Joakim", "Von And") { Balance = int.MaxValue, UserName = "b"});
@@ -29,8 +32,9 @@ namespace ConsoleUI
         {
             if (user == null) throw new ArgumentNullException("user");
             if (product == null) throw new ArgumentNullException("product");
-            
-            return new BuyTransaction(1, user, DateTime.Now, product, product.Price * -1);
+
+            int id = transactions.Count + 1;
+            return new BuyTransaction(id, user, DateTime.Now, product, product.Price * -1);
         }
 
         public void AddCreditsToAccount(User user, int amount)
@@ -42,6 +46,8 @@ namespace ConsoleUI
         public void ExecuteTransaction(Transaction transaction)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
+
+            transactions.Add(transaction);
 
             transaction.Execute();
         }
@@ -69,11 +75,11 @@ namespace ConsoleUI
             return user;
         }
 
-        public IList<Transaction> GetTransactionList(User user)
+        public IEnumerable<Transaction> GetTransactionList(User user)
         {
             if (user == null) throw new ArgumentNullException("user");
 
-            throw new System.NotImplementedException();
+            return transactions.Where(t => t.User.Equals(user));
         }
 
         public IEnumerable<Product> GetActiveProducts()

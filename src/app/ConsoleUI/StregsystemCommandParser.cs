@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO.Pipes;
+using System.Linq;
 using ostrich.ConsoleUI;
 
 namespace ConsoleUI
@@ -36,23 +38,49 @@ namespace ConsoleUI
 
             Command cmd = new Command(stringToParse);
             if (cmd.IsAdminCommand)
+            {
                 ProcessAdminCommand(cmd);
+            }
+            else if (cmd.RawArguments.Length == 1)
+                ProcessSimpleUserCommand(cmd.RawArguments[0]);
             else
                 ProcessQuickbuyCommand(cmd);
+        }
+
+        private void ProcessSimpleUserCommand(string userName)
+        {
+            try
+            {
+                User user = stregsystem.GetUser(userName);
+                var transactions = stregsystem.GetTransactionList(user);
+                var latestTransactions = transactions
+                        .Where(t => t is BuyTransaction)
+                        .Cast<BuyTransaction>()
+                        .OrderBy(t => t.Date)
+                        .Take(10);
+                
+                ui.DisplayUserInfo(user, latestTransactions);
+            }
+            catch (UserNotFoundException exception)
+            {
+                ui.DisplayUserNotFound(exception);
+            }
         }
 
         private void ProcessQuickbuyCommand(Command cmd)
         {
             string userName = cmd.Name;
-            
-            if (!cmd.Argument.HasValue)
+
+            int? argument = cmd.GetInt(1);
+
+            if (!argument.HasValue)
             {
                 string msg = string.Format("Please specify which product ID to buy. Example '{0} 11'", userName);
                 ui.DisplayGeneralError(msg);
                 return;
             }
 
-            int productId = cmd.Argument.Value;
+            int productId = argument.Value;
             try
             {
                 User user = stregsystem.GetUser(userName);
@@ -83,10 +111,12 @@ namespace ConsoleUI
 
         private void ProcessAdminCommand(Command cmd)
         {
+            int? argument = cmd.GetInt(1);
+
             if (":q".Equals(cmd.Name) || ":quit".Equals(cmd.Name))
                 ui.Close();
-            else if (commands.ContainsKey(cmd.Name) && cmd.Argument.HasValue)
-                commands[cmd.Name](cmd.Argument.Value);
+            else if (commands.ContainsKey(cmd.Name) && argument.HasValue)
+                commands[cmd.Name](argument.Value);
             else
                 ui.DisplayAdminCommandNotFoundMessage(cmd);
         }

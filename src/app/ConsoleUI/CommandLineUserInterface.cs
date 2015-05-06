@@ -44,9 +44,15 @@ namespace ConsoleUI
             Console.WriteLine("Product '{0}' was not found.", exception.ProductID);
         }
 
-        public void DisplayUserInfo(User user)
+        public void DisplayUserInfo(User user, IEnumerable<BuyTransaction> latestTransactions)
         {
-            Console.WriteLine("User Details: {0}", user);
+            Console.WriteLine("User Details");
+            Console.WriteLine(" Username: {0}\nFull name: {1}\nBalance: {2}", user.UserName, user.FullName, user.Balance);
+            Console.WriteLine("Recent buy transactions");
+            foreach (BuyTransaction transaction in latestTransactions)
+            {
+                Console.WriteLine(" -> {0}", transaction);
+            }
         }
 
         public void DisplayTooManyArgumentsError()

@@ -11,7 +11,7 @@ namespace ConsoleUI
     {
         private readonly ProductCatalog productCatalog;
         private readonly UserRepository userRepository;
-        private readonly IList<Transaction> transactions;
+        private readonly TransactionManager transactions;
 
         public Stregsystem()
         {
@@ -21,7 +21,7 @@ namespace ConsoleUI
 
             productCatalog = importer.Import();
 
-            transactions = new List<Transaction>();
+            transactions = new TransactionManager();
 
             userRepository = new UserRepository();
             userRepository.Add(new User(1, "Joakim", "Von And") { Balance = int.MaxValue, UserName = "b"});
@@ -30,25 +30,17 @@ namespace ConsoleUI
 
         public BuyTransaction BuyProduct(User user, Product product)
         {
-            if (user == null) throw new ArgumentNullException("user");
-            if (product == null) throw new ArgumentNullException("product");
-
-            int id = transactions.Count + 1;
-            return new BuyTransaction(id, user, DateTime.Now, product, product.Price * -1);
+            return transactions.Buy(user, product);
         }
 
-        public void AddCreditsToAccount(User user, int amount)
+        public InsertCashTransaction AddCreditsToAccount(User user, int amount)
         {
-            if (user == null) throw new ArgumentNullException("user");
-            throw new System.NotImplementedException();
+            return transactions.AddCredits(user, amount);
         }
 
         public void ExecuteTransaction(Transaction transaction)
         {
-            if (transaction == null) throw new ArgumentNullException("transaction");
-
-            transaction.Execute();
-            transactions.Add(transaction);
+            transactions.Commit(transaction);
         }
 
         public Product GetProduct(int productId)
@@ -76,9 +68,10 @@ namespace ConsoleUI
 
         public IEnumerable<Transaction> GetTransactionList(User user)
         {
-            if (user == null) throw new ArgumentNullException("user");
+            if (user == null) 
+                throw new ArgumentNullException("user");
 
-            return transactions.Where(t => t.User.Equals(user));
+            return transactions.GetAll().Where(t => t.User.Equals(user));
         }
 
         public IEnumerable<Product> GetActiveProducts()

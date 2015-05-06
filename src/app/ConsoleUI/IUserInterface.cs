@@ -16,5 +16,6 @@ namespace ConsoleUI
         void DisplayInsufficientCash(InsufficientCreditsException exception);
         void DisplayGeneralError(string errorString);
         void DisplayProductNotSaleable(ProductNotSaleableException exception);
+        void DisplayCashInserted(InsertCashTransaction transaction);
     }
 }

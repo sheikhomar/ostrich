@@ -10,7 +10,7 @@ namespace ConsoleUI
     public interface IStregsystem
     {
         BuyTransaction BuyProduct(User user, Product product);
-        void AddCreditsToAccount(User user, int amount);
+        InsertCashTransaction AddCreditsToAccount(User user, int amount);
         void ExecuteTransaction(Transaction transaction);
         Product GetProduct(int productId);
         User GetUser(string userName);

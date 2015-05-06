@@ -108,5 +108,11 @@ namespace ConsoleUI
         {
             Console.WriteLine(exception.Message);
         }
+
+        public void DisplayCashInserted(InsertCashTransaction transaction)
+        {
+            Console.WriteLine("{0} has been inserted into the account of '{1}'.", 
+                transaction.Amount, transaction.User.UserName);
+        }
     }
 }

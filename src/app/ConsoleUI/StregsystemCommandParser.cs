@@ -27,6 +27,7 @@ namespace ConsoleUI
                 {":deactivate", DeactivateProduct},
                 {":list-products", ListProducts}, {":p", ListProducts},
                 {":list-users", ListUsers}, {":u", ListUsers},
+                {":addcredits", AddCredits},
                 {":quit", Quit}, {":q", Quit},
             };
         }
@@ -194,6 +195,36 @@ namespace ConsoleUI
         private void Quit(Command command)
         {
             ui.Close();
+        }
+
+        private void AddCredits(Command commad)
+        {
+            if (commad.RawArguments.Length != 3)
+            {
+                ui.DisplayGeneralError("Wrong arguments. Must be like ':addcredits <user-name> <product-id>'");
+                return;
+            }
+
+            int? amount = commad.GetInt(2);
+            if (amount == null || amount.Value < 1) 
+            { 
+                ui.DisplayGeneralError("Amount must be a positive integer.");
+                return;
+            }
+
+            try
+            {
+                string userName = commad.RawArguments[1];
+                User user = stregsystem.GetUser(userName);
+                
+                InsertCashTransaction transaction = stregsystem.AddCreditsToAccount(user, amount.Value);
+                stregsystem.ExecuteTransaction(transaction);
+                ui.DisplayCashInserted(transaction);
+            }
+            catch (UserNotFoundException exception)
+            {
+                ui.DisplayUserNotFound(exception);
+            }
         }
     }
 }

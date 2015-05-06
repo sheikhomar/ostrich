@@ -44,8 +44,13 @@ namespace ConsoleUI
                 ProcessAdminCommand(cmd);
             else if (cmd.RawArguments.Length == 1)
                 ProcessSimpleUserCommand(cmd.RawArguments[0]);
+            else if (cmd.RawArguments.Length == 2)
+                ProcessBuyCommand(cmd);
+            else if (cmd.RawArguments.Length == 3)
+                ProcessMultiBuyCommand(cmd);
             else
-                ProcessQuickbuyCommand(cmd);
+                ui.DisplayTooManyArgumentsError();
+                
         }
 
         private void ProcessSimpleUserCommand(string userName)
@@ -68,7 +73,7 @@ namespace ConsoleUI
             }
         }
 
-        private void ProcessQuickbuyCommand(Command cmd)
+        private void ProcessBuyCommand(Command cmd)
         {
             string userName = cmd.Name;
 
@@ -108,6 +113,11 @@ namespace ConsoleUI
             {
                 ui.DisplayProductNotSaleable(exception);
             }
+        }
+        
+        private void ProcessMultiBuyCommand(Command cmd)
+        {
+            ui.DisplayGeneralError("MultiBuy is not implemented yet.");
         }
 
         private void ProcessAdminCommand(Command cmd)

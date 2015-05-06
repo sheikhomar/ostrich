@@ -52,7 +52,7 @@ namespace ConsoleUI
 
         public void DisplayTooManyArgumentsError()
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Your command contains too many arguments. Please try again.");
         }
 
         public void DisplayAdminCommandNotFoundMessage(Command cmd)

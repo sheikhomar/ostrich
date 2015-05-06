@@ -81,12 +81,7 @@ namespace ConsoleUI
         {
             Console.WriteLine("User\n  {0}\nhas bought\n  {1}", transaction.User, transaction.Product);
         }
-
-        public void DisplayUserBuysProduct(int count)
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public void Close()
         {
             // http://stackoverflow.com/questions/10286056/what-is-the-command-to-exit-a-console-application-in-c
@@ -113,6 +108,27 @@ namespace ConsoleUI
         {
             Console.WriteLine("{0} has been inserted into the account of '{1}'.", 
                 transaction.Amount, transaction.User.UserName);
+        }
+
+        public void DisplaceProducts(IEnumerable<Product> products)
+        {
+            Console.WriteLine("Active products:");
+            Console.WriteLine("{0,-5}{1}\t{2,-50}\t{3,-10}", "ID", " ", "Products", "Price");
+            foreach (var product in products)
+            {
+                Console.WriteLine("{0,5}{1}\t{2,-50}\t{3,10}",
+                    product.ProductID,
+                    product.CanBeBoughtOnCredit ? "*" : " ",
+                    product.Name,
+                    product.FormattedPrice);
+            }
+        }
+
+        public void DisplayUsers(IEnumerable<User> users)
+        {
+            Console.WriteLine("Users:");
+            foreach (var product in users)
+                Console.WriteLine("{0}", product);
         }
     }
 }

@@ -177,24 +177,18 @@ namespace ConsoleUI
         private void ListProducts(Command command)
         {
             var activeProducts = stregsystem.GetActiveProducts();
-            Console.WriteLine("Active products:");
-            Console.WriteLine("{0,-5}\t{1,-50}\t{2,-8}", " ID", "Products", "Price");
-            foreach (var product in activeProducts)
-                Console.WriteLine("{0,5}\t{1,-50}\t{2,8}", 
-                    product.ProductID, product.Name, product.FormattedPrice);
+            ui.DisplaceProducts(activeProducts);
         }
 
         private void ListUsers(Command command)
         {
             var users = stregsystem.GetUsers();
-            Console.WriteLine("Users:");
-            foreach (var product in users)
-                Console.WriteLine("{0}", product);
         }
 
         private void Quit(Command command)
         {
             ui.Close();
+            ui.DisplayUsers(users);
         }
 
         private void AddCredits(Command commad)

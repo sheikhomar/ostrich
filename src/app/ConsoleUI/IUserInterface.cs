@@ -11,11 +11,12 @@ namespace ConsoleUI
         void DisplayTooManyArgumentsError();
         void DisplayAdminCommandNotFoundMessage(Command cmd);
         void DisplayUserBuysProduct(BuyTransaction transaction);
-        void DisplayUserBuysProduct(int count);
         void Close();
         void DisplayInsufficientCash(InsufficientCreditsException exception);
         void DisplayGeneralError(string errorString);
         void DisplayProductNotSaleable(ProductNotSaleableException exception);
         void DisplayCashInserted(InsertCashTransaction transaction);
+        void DisplaceProducts(IEnumerable<Product> products);
+        void DisplayUsers(IEnumerable<User> users);
     }
 }

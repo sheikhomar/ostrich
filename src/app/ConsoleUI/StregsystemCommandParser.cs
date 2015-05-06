@@ -35,15 +35,13 @@ namespace ConsoleUI
         {
             if (string.IsNullOrWhiteSpace(stringToParse))
             {
-                ui.DisplayGeneralError("Invalid command detected.");
+                ui.DisplayGeneralError("Please command and I will try to obey.");
                 return;
             }
 
             Command cmd = new Command(stringToParse);
             if (cmd.IsAdminCommand)
-            {
                 ProcessAdminCommand(cmd);
-            }
             else if (cmd.RawArguments.Length == 1)
                 ProcessSimpleUserCommand(cmd.RawArguments[0]);
             else

@@ -60,6 +60,7 @@
     <Compile Include="CommandLineUserInterface.cs" />
     <Compile Include="StregsystemCommandParser.cs" />
     <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionManager.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserNotFoundException.cs" />
     <Compile Include="UserRepository.cs" />

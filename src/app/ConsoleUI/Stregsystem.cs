@@ -47,9 +47,8 @@ namespace ConsoleUI
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
 
-            transactions.Add(transaction);
-
             transaction.Execute();
+            transactions.Add(transaction);
         }
 
         public Product GetProduct(int productId)

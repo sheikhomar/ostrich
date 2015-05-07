@@ -4,7 +4,7 @@ namespace ostrich.Core
 {
     public class Product
     {
-        public Product(int productId, string name, int price, bool active = true)
+        public Product(int productId, string name, int price)
         {
             if (productId < 1)
                 throw new ArgumentException("Product ID must be a positive integer.", "productId");
@@ -15,14 +15,17 @@ namespace ostrich.Core
             ProductID = productId;
             Name = name;
             Price = price;
-            Active = active;
         }
 
-        public int ProductID { get; set; }
-        public string Name { get; set; }
+        public int ProductID { get; private set; }
+
+        public string Name { get; private set; }
+
         public int Price { get; set; }
-        public virtual bool Active { get; set; }
+
         public bool CanBeBoughtOnCredit { get; set; }
+
+        public virtual bool Active { get; set; }
 
         public string FormattedPrice
         {

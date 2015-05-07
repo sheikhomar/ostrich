@@ -12,7 +12,7 @@ namespace ostrich.Tests
         public void Execute_should_balance_account()
         {
             var user = new User(1, "Mr.", "Burns", "evilcorp111one") { Balance = 2147483647 };
-            var product = new Product(1, "Milk", 1000);
+            var product = new Product(1, "Milk", 1000) { Active = true };
             var transaction = new BuyTransaction(1, user, DateTime.Now, product);
             transaction.Execute();
 
@@ -66,7 +66,7 @@ namespace ostrich.Tests
         public void Execute_should_throw_exception_if_product_is_not_saleable()
         {
             var user = new User(1, "Mr.", "Burns", "evilcorp111one") { Balance = 2147483647 };
-            var product = new Product(2, "Slow-Fission Reactor", 10000000, false);
+            var product = new Product(2, "Slow-Fission Reactor", 10000000) { Active = false };
             var transaction = new BuyTransaction(1, user, DateTime.Now, product);
 
             var ex = Assert.Throws<ProductNotSaleableException>(() => transaction.Execute());

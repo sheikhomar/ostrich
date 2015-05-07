@@ -19,9 +19,8 @@ namespace ostrich.Core
             if (product == null) 
                 throw new ArgumentNullException("product");
 
-            // TODO: Make custom exception here.
             if (products.ContainsKey(product.ProductID))
-                throw new Exception("Product already exists.");
+                throw new ProductExistsException(products[product.ProductID], product);
 
             products.Add(product.ProductID, product);
         }

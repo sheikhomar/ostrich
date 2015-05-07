@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ostrich.Core.Exceptions;
 
 namespace ostrich.Core
 {
@@ -25,9 +26,14 @@ namespace ostrich.Core
             products.Add(product.ProductID, product);
         }
 
-        public Product TryFindById(int id)
+        public Product GetProduct(int id)
         {
-            return !products.ContainsKey(id) ? null : products[id];
+            if (id < 1)
+                throw new ArgumentOutOfRangeException("id", id, "Product ID must be a positive integer.");
+            if (!products.ContainsKey(id))
+                throw new ProductNotFoundException(id);
+
+            return products[id];
         }
 
         public IEnumerable<Product> GetActiveProducts()

@@ -44,15 +44,7 @@ namespace ostrich.Core
 
         public Product GetProduct(int productId)
         {
-            if (productId < 1)
-                throw new ArgumentOutOfRangeException("productId", productId, "Product id cannot be below 1.");
-
-            Product product = productCatalog.TryFindById(productId);
-
-            if (product == null)
-                throw new ProductNotFoundException(productId);
-
-            return product;
+            return productCatalog.GetProduct(productId);
         }
 
         public User GetUser(string userName)

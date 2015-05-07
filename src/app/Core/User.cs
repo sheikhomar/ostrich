@@ -4,20 +4,22 @@ namespace ostrich.Core
 {
     public class User : IComparable<User>
     {
-        private string userName;
         private string email;
         private int balance;
 
-        public User(int userId, string firstName, string lastName)
+        public User(int userId, string firstName, string lastName, string userName)
         {
             if (firstName == null) 
                 throw new ArgumentNullException("firstName");
             if (lastName == null) 
                 throw new ArgumentNullException("lastName");
+            if (!IsUserNameValid(userName))
+                throw new ArgumentException("User is not valid.", "userName");
 
             UserID = userId;
             FirstName = firstName;
             LastName = lastName;
+            UserName = userName;
         }
 
         public int UserID { get; set; }
@@ -26,16 +28,7 @@ namespace ostrich.Core
 
         public string LastName { get; set; }
 
-        public string UserName
-        {
-            get { return userName; }
-            set
-            {
-                if (!IsUserNameValid(value))
-                    throw new ArgumentException("User is not valid.");
-                userName = value;
-            }
-        }
+        public string UserName { get; set; }
 
         public string Email
         {

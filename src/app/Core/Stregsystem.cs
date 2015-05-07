@@ -24,8 +24,8 @@ namespace ostrich.Core
             transactions = new TransactionManager();
 
             userRepository = new UserRepository();
-            userRepository.Add(new User(1, "Joakim", "Von And") { Balance = int.MaxValue, UserName = "b"});
-            userRepository.Add(new User(2, "Anders", "And") { Balance = 6000, UserName = "a" });
+            userRepository.Add(new User(1, "Joakim", "Von And", "b") { Balance = int.MaxValue });
+            userRepository.Add(new User(2, "Anders", "And", "a") { Balance = 6000 });
         }
 
         public BuyTransaction BuyProduct(User user, Product product)

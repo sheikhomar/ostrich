@@ -36,7 +36,7 @@ namespace ostrich.Core
             int price = csv.GetInt(2);
             bool active = csv.GetInt(3) == 1;
 
-            return new Product(id, name, price) { Active = active };
+            return new Product(id, name) { Active = active, Price = price };
         }
 
         private string StripUnwantedCharacters(string input)

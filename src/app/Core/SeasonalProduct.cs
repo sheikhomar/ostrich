@@ -7,8 +7,8 @@ namespace ostrich.Core
         private DateTime? seasonEndsAt;
         private DateTime? seasonStartsAt;
 
-        public SeasonalProduct(int productId, string name, int price)
-            : base(productId, name, price)
+        public SeasonalProduct(int productId, string name)
+            : base(productId, name)
         {
         }
 

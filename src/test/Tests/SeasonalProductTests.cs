@@ -12,7 +12,7 @@ namespace ostrich.Tests
         [SetUp]
         public void Setup()
         {
-            product = new SeasonalProduct(1, "Party food", 15000);
+            product = new SeasonalProduct(1, "Party food");
         }
 
         [Test]

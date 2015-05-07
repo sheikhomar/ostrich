@@ -4,10 +4,12 @@ namespace ostrich.Core
 {
     public class Product
     {
-        public Product(int productId, string name, int price)
+        private int price;
+
+        public Product(int productId, string name)
         {
             if (productId < 1)
-                throw new ArgumentException("Product ID must be a positive integer.", "productId");
+                throw new ArgumentOutOfRangeException("productId","Product ID must be a positive integer.");
 
             if (name == null) 
                 throw new ArgumentNullException("name");
@@ -21,20 +23,24 @@ namespace ostrich.Core
 
         public string Name { get; private set; }
 
-        public int Price { get; set; }
-
         public bool CanBeBoughtOnCredit { get; set; }
 
         public virtual bool Active { get; set; }
 
+        public int Price
+        {
+            get { return price; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("value", value, "Price must be zero or a positive integer.");
+                price = value;
+            }
+        }
+
         public string FormattedPrice
         {
             get { return String.Format("{0:N2} kr.", Price/100); }
-        }
-
-        public override string ToString()
-        {
-            return String.Format("{0} {1} {2}", ProductID, Name, Price);
         }
     }
 }

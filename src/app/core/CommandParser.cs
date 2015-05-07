@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ostrich.Core
 {
-    public class StregsystemCommandParser
+    public class CommandParser
     {
         private readonly IDictionary<CommandType, IController> controllers;
 
-        public StregsystemCommandParser(IUserInterface ui, IBackendSystem system)
+        public CommandParser(IUserInterface ui, IBackendSystem system)
         {
             if (ui == null) 
                 throw new ArgumentNullException("ui");

@@ -9,7 +9,7 @@ namespace ostrich.ConsoleUI
     {
         private bool running;
 
-        public void Start(StregsystemCommandParser parser)
+        public void Start(CommandParser parser)
         {
             running = true;
             Console.WriteLine("Your wish is my command.");

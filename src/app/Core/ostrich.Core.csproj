@@ -38,6 +38,7 @@
     <Compile Include="BuyTransaction.cs" />
     <Compile Include="CommandArgumentCollection.cs" />
     <Compile Include="CommandNotFoundController.cs" />
+    <Compile Include="CommandParser.cs" />
     <Compile Include="CommandType.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="CsvReader.cs" />
@@ -58,7 +59,6 @@
     <Compile Include="QuickBuyController.cs" />
     <Compile Include="SeasonalProduct.cs" />
     <Compile Include="DefaultBackendSystem.cs" />
-    <Compile Include="StregsystemCommandParser.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="TransactionFile.cs" />
     <Compile Include="TransactionManager.cs" />

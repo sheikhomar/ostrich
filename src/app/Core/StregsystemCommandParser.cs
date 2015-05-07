@@ -7,20 +7,20 @@ namespace ostrich.Core
     {
         private readonly IDictionary<CommandType, IController> controllers;
 
-        public StregsystemCommandParser(IUserInterface ui, IStregsystem stregsystem)
+        public StregsystemCommandParser(IUserInterface ui, IBackendSystem system)
         {
             if (ui == null) 
                 throw new ArgumentNullException("ui");
 
-            if (stregsystem == null) 
-                throw new ArgumentNullException("stregsystem");
+            if (system == null) 
+                throw new ArgumentNullException("system");
 
             controllers = new Dictionary<CommandType, IController>
             {
-                {CommandType.Unknown, new CommandNotFoundController(ui, stregsystem)},
-                {CommandType.Administration, new AdministrationController(ui, stregsystem)},
-                {CommandType.UserDetails, new UserDetailsController(ui, stregsystem)},
-                {CommandType.QuickBuy, new QuickBuyController(ui, stregsystem)},
+                {CommandType.Unknown, new CommandNotFoundController(ui, system)},
+                {CommandType.Administration, new AdministrationController(ui, system)},
+                {CommandType.UserDetails, new UserDetailsController(ui, system)},
+                {CommandType.QuickBuy, new QuickBuyController(ui, system)},
             };
         }
 

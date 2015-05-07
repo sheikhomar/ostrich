@@ -5,7 +5,7 @@ namespace ostrich.Core
 {
     public class UserDetailsController : Controller
     {
-        public UserDetailsController(IUserInterface ui, IStregsystem system) : base(ui, system)
+        public UserDetailsController(IUserInterface ui, IBackendSystem system) : base(ui, system)
         {
         }
 

@@ -7,13 +7,13 @@ using ostrich.Core.Exceptions;
 
 namespace ostrich.Core
 {
-    public class Stregsystem : IStregsystem
+    public class DefaultBackendSystem : IBackendSystem
     {
         private readonly ProductCatalog productCatalog;
         private readonly UserRepository userRepository;
         private readonly TransactionManager transactions;
 
-        public Stregsystem()
+        public DefaultBackendSystem()
         {
             // TODO: assume that file encoding is Encoding.Default
             var reader = new StreamReader("products.csv", Encoding.Default);

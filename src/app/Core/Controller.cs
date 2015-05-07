@@ -4,7 +4,7 @@ namespace ostrich.Core
 {
     public abstract class Controller : IController
     {
-        protected Controller(IUserInterface ui, IStregsystem system)
+        protected Controller(IUserInterface ui, IBackendSystem system)
         {
             if (ui == null) 
                 throw new ArgumentNullException("ui");
@@ -25,7 +25,7 @@ namespace ostrich.Core
 
         protected IUserInterface UI { get; private set; }
 
-        protected IStregsystem System { get; private set; }
+        protected IBackendSystem System { get; private set; }
 
         protected abstract void ProcessInternal(CommandArgumentCollection args);
     }

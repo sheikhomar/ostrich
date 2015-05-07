@@ -6,9 +6,9 @@ namespace ostrich.ConsoleUI
     {
         static void Main(string[] args)
         {
-            IStregsystem stregsystem = new Stregsystem();
+            IBackendSystem backendSystem = new DefaultBackendSystem();
             CommandLineInterface cli = new CommandLineInterface();
-            StregsystemCommandParser parser = new StregsystemCommandParser(cli, stregsystem);
+            StregsystemCommandParser parser = new StregsystemCommandParser(cli, backendSystem);
             cli.Start(parser);
         }
     }

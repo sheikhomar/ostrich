@@ -2,7 +2,7 @@
 
 namespace ostrich.Core
 {
-    public interface IStregsystem
+    public interface IBackendSystem
     {
         BuyTransaction BuyProduct(User user, Product product);
         InsertCashTransaction AddCreditsToAccount(User user, int amount);

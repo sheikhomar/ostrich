@@ -8,7 +8,7 @@ namespace ostrich.Core
     {
         private readonly IDictionary<string, Action<CommandArgumentCollection>> commands;
 
-        public AdministrationController(IUserInterface ui, IStregsystem system)
+        public AdministrationController(IUserInterface ui, IBackendSystem system)
             : base(ui, system)
         {
             commands = new Dictionary<string, Action<CommandArgumentCollection>>

@@ -2,7 +2,7 @@ namespace ostrich.Core
 {
     public class CommandNotFoundController : Controller
     {
-        public CommandNotFoundController(IUserInterface ui, IStregsystem system) : base(ui, system)
+        public CommandNotFoundController(IUserInterface ui, IBackendSystem system) : base(ui, system)
         {
         }
 

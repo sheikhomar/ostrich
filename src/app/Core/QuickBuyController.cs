@@ -5,7 +5,7 @@ namespace ostrich.Core
 {
     public class QuickBuyController : Controller
     {
-        public QuickBuyController(IUserInterface ui, IStregsystem system) : base(ui, system)
+        public QuickBuyController(IUserInterface ui, IBackendSystem system) : base(ui, system)
         {
         }
 

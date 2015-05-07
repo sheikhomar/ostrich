@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ostrich.Core
 {
     public class User : IComparable<User>
     {
+        public const int LowBalanceLimit = 5000;
+
+        private static readonly Regex UserNameValidCharsRegex = new Regex("^[a-z0-9_]+$", RegexOptions.Compiled);
+        private static readonly Regex EmailCheckerRegex = new Regex(
+            "^[a-z0-9_.-]+@[a-z0-9_][a-z0-9_.-]+[a-z0-9_]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private string email;
-        private int balance;
 
         public User(int userId, string firstName, string lastName, string userName)
         {
@@ -13,8 +19,10 @@ namespace ostrich.Core
                 throw new ArgumentNullException("firstName");
             if (lastName == null) 
                 throw new ArgumentNullException("lastName");
+            if (userName == null) 
+                throw new ArgumentNullException("userName");
             if (!IsUserNameValid(userName))
-                throw new ArgumentException("User is not valid.", "userName");
+                throw new ArgumentException("Username is not valid.", "userName");
 
             UserID = userId;
             FirstName = firstName;
@@ -22,13 +30,15 @@ namespace ostrich.Core
             UserName = userName;
         }
 
-        public int UserID { get; set; }
+        public int UserID { get; private set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; private set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; private set; }
 
-        public string UserName { get; set; }
+        public string UserName { get; private set; }
+
+        public int Balance { get; set; }
 
         public string Email
         {
@@ -36,26 +46,14 @@ namespace ostrich.Core
             set
             {
                 if (!IsEmailValid(value))
-                    throw new ArgumentException("Email is not valid.");
+                    throw new ArgumentException("Email is not valid.", "value");
                 email = value;
-            }
-        }
-
-        public int Balance
-        {
-            get { return balance; }
-            set
-            {
-                if (!IsNewBalanceValid(value))
-                    throw new ArgumentException("Balance is not valid.");
-                
-                balance = value;
             }
         }
 
         public bool HasLowBalance
         {
-            get { return Balance < 5000; }
+            get { return Balance < LowBalanceLimit; }
         }
 
         public string FullName
@@ -63,11 +61,9 @@ namespace ostrich.Core
             get { return string.Format("{0} {1}", FirstName, LastName); }
         }
 
-        public bool Equals(User user)
+        public bool Equals(User other)
         {
-            if (user == null)
-                return false;
-            return user.UserID == UserID;
+            return other != null && other.UserID == UserID;
         }
 
         public int CompareTo(User other)
@@ -87,23 +83,17 @@ namespace ostrich.Core
 
         public override string ToString()
         {
-            return string.Format("{0} {1} ({2}) Balance={3}", FirstName, LastName, UserName, Balance);
+            return string.Format("{0} {1} ({2})", FirstName, LastName, Email);
         }
 
-        private bool IsNewBalanceValid(int input)
+        private bool IsUserNameValid(string input)
         {
-            return true;
-        }
-
-        public bool IsUserNameValid(string input)
-        {
-            // TODO: Fix this
-            return true;
+            return input != null && UserNameValidCharsRegex.IsMatch(input);
         }
 
         private bool IsEmailValid(string input)
         {
-            return true;
+            return EmailCheckerRegex.IsMatch(input);
         }
     }
 }

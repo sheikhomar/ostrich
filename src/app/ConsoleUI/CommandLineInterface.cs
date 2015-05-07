@@ -2,19 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using ostrich.Core;
-using ostrich.Core.Exceptions;
 
 namespace ostrich.ConsoleUI
 {
-    public class CommandLineUserInterface : IUserInterface
+    public class CommandLineInterface : IUserInterface
     {
-        private readonly IStregsystem stregsystem;
-
-        public CommandLineUserInterface(IStregsystem stregsystem)
-        {
-            this.stregsystem = stregsystem;
-        }
-
         public void Start(StregsystemCommandParser parser)
         {
             Console.WriteLine("Your wish is my command.");

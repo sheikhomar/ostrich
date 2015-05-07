@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute">
+      <HintPath>..\..\..\packages\NSubstitute\lib\net45\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -39,6 +42,7 @@
   <ItemGroup>
     <Compile Include="BuyTransactionTests.cs" />
     <Compile Include="CommandArgumentCollectionTests.cs" />
+    <Compile Include="CommandParserTests.cs" />
     <Compile Include="InsertCashTransactionTests.cs" />
     <Compile Include="ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

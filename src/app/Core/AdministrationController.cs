@@ -49,7 +49,25 @@ namespace ostrich.Core
                 return;
             }
 
-            ChangeProductProperty(args.GetAsInt(1), product => product.Active = isActive);
+            var productId = args.GetAsInt(1);
+            if (productId == null || productId.Value < 1)
+            {
+                UI.DisplayGeneralError("Product ID must be a positive integer.");
+                return;
+            }
+
+            try
+            {
+                Product product = System.GetProduct(productId.Value);
+                if (product is SeasonalProduct)
+                    UI.DisplayGeneralError("Cannot change activate or deactivate seasonal product.");
+                else
+                    product.Active = isActive;
+            }
+            catch (ProductNotFoundException exception)
+            {
+                UI.DisplayProductNotFound(exception.ProductID);
+            }
         }
 
         private void ToggleBuyOnCreditForProduct(CommandArgumentCollection args, bool canBeBoughtOnCredit)

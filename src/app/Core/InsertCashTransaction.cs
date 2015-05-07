@@ -16,7 +16,7 @@ namespace ostrich.Core
 
         public override string ToString()
         {
-            return string.Format("{0} [InsertCash]", base.ToString());
+            return string.Format("{0} Type=InsertCash", base.ToString());
         }
     }
 }

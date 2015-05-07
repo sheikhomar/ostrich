@@ -27,6 +27,16 @@ namespace ostrich.Tests
             Assert.AreEqual("Homer Simpson (h.simpson@7g.springfield-power.com)", user.ToString());
         }
 
+
+        [Test]
+        public void FullName_should_be_formatted_correctly()
+        {
+            var user = new User(1457, "Homer", "Simpson", "homes");
+            user.Email = "h.simpson@7g.springfield-power.com";
+
+            Assert.AreEqual("Homer Simpson", user.FullName);
+        }
+
         [TestCase(arguments: new object[] { null, "Simpson", "homes" }, Result = "firstName")]
         [TestCase(arguments: new object[] { "Home", null, "homes" }, Result = "lastName")]
         [TestCase(arguments: new object[] { "Home", "Simpson", null }, Result = "userName")]
@@ -130,6 +140,16 @@ namespace ostrich.Tests
 
             Assert.IsFalse(homer1.Equals(homer2));
             Assert.IsFalse(homer1.Equals((object)homer2));
+        }
+
+        [Test]
+        public void CompareTo_should_compare_based_on_UserID()
+        {
+            var homer1 = new User(1, "Homer", "Simpson", "home_sim");
+            var homer2 = new User(2, "Homer", "Simpson", "home_sim");
+
+            Assert.AreEqual(1.CompareTo(2), homer1.CompareTo(homer2));
+            Assert.AreEqual(2.CompareTo(1), homer2.CompareTo(homer1));
         }
 
         [TestCase(int.MaxValue, Result = false)]

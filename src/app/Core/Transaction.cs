@@ -5,14 +5,14 @@ namespace ostrich.Core
 {
     public abstract class Transaction
     {
-        protected Transaction(int id, User user, DateTime date, int amount)
+        protected Transaction(int id, User user, DateTime date)
         {
-            if (user == null) throw new ArgumentNullException("user");
+            if (user == null) 
+                throw new ArgumentNullException("user");
 
             TransactionID = id;
             User = user;
             Date = date;
-            Amount = amount;
         }
 
         public int TransactionID { get; private set; }
@@ -21,7 +21,7 @@ namespace ostrich.Core
 
         public DateTime Date { get; private set; }
 
-        public int Amount { get; private set; }
+        public int Amount { get; protected set; }
 
         public abstract void Execute();
 

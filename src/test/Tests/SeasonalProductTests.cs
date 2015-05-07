@@ -55,6 +55,12 @@ namespace ostrich.Tests
         }
 
         [Test]
+        public void Active_should_throw_exception_if_set()
+        {
+            Assert.Throws<InvalidOperationException>(() => product.Active = false);
+        }
+
+        [Test]
         public void SeasonEndsAt_must_come_after_SeasonStartsAt()
         {
             product.SeasonStartsAt = DateTime.Now;

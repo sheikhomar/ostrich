@@ -8,6 +8,25 @@ namespace ostrich.Tests
     [TestFixture]
     public class BuyTransactionTests
     {
+
+        [Test]
+        public void Constructor_should_not_allow_null_product()
+        {
+            var user = new User(1, "Mr.", "Burns", "evilcorp111one") { Balance = 2147483647 };
+
+            var ex = Assert.Throws<ArgumentNullException>(() => new BuyTransaction(1, user, DateTime.Now, null));
+            Assert.AreEqual("product", ex.ParamName);
+        }
+
+        [Test]
+        public void Constructor_should_not_allow_null_user()
+        {
+            var product = new Product(1, "Milk", 1000) { Active = true };
+
+            var ex = Assert.Throws<ArgumentNullException>(() => new BuyTransaction(1, null, DateTime.Now, product));
+            Assert.AreEqual("user", ex.ParamName);
+        }
+
         [Test]
         public void Execute_should_balance_account()
         {
@@ -72,6 +91,18 @@ namespace ostrich.Tests
             var ex = Assert.Throws<ProductNotSaleableException>(() => transaction.Execute());
             Assert.AreSame(product, ex.Product);
             Assert.AreEqual(2147483647, user.Balance);
+        }
+
+        [Test]
+        public void ToString_should_return_correct_STRING()
+        {
+            var user = new User(1, "Mr.", "Burns", "evilcorp111one") { Balance = 2147483647 };
+            var product = new Product(2, "Slow-Fission Reactor", 10000000) { Active = false };
+            var transaction = new BuyTransaction(1, user, DateTime.Now, product);
+            var str = transaction.ToString();
+
+            Assert.IsTrue(str.Contains("ProductID=2"));
+            Assert.IsTrue(str.Contains("Type=Buy"));
         }
     }
 }

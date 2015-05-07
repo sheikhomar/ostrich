@@ -12,14 +12,6 @@ namespace ostrich.Core
                 RawArguments = new string[0];
         }
 
-        public CommandArgumentCollection(string[] rawArguments)
-        {
-            if (rawArguments == null) 
-                throw new ArgumentNullException("rawArguments");
-
-            RawArguments = rawArguments;
-        }
-
         public string[] RawArguments { get; private set; }
 
         public int Count

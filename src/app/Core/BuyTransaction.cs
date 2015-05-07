@@ -8,9 +8,12 @@ namespace ostrich.Core
         public Product Product { get; set; }
 
         public BuyTransaction(int id, User user, DateTime date, Product product)
-            : base(id, user, date, product.Price * -1)
+            : base(id, user, date)
         {
-            if (product == null) throw new ArgumentNullException("product");
+            if (product == null) 
+                throw new ArgumentNullException("product");
+
+            Amount = product.Price*-1;
 
             Product = product;
         }

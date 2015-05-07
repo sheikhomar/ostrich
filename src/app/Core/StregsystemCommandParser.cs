@@ -69,7 +69,7 @@ namespace ostrich.Core
             }
             catch (UserNotFoundException exception)
             {
-                ui.DisplayUserNotFound(exception);
+                ui.DisplayUserNotFound(exception.UserName);
             }
         }
 
@@ -104,22 +104,22 @@ namespace ostrich.Core
             }
             catch (UserNotFoundException exception)
             {
-                ui.DisplayUserNotFound(exception);
+                ui.DisplayUserNotFound(exception.UserName);
                 return false;
             }
             catch (ProductNotFoundException exception)
             {
-                ui.DisplayProductNotFound(exception);
+                ui.DisplayProductNotFound(exception.ProductID);
                 return false;
             }
             catch (InsufficientCreditsException exception)
             {
-                ui.DisplayInsufficientCash(exception);
+                ui.DisplayInsufficientCash(exception.User, exception.Product);
                 return false;
             }
             catch (ProductNotSaleableException exception)
             {
-                ui.DisplayProductNotSaleable(exception);
+                ui.DisplayProductNotSaleable(exception.Product);
                 return false;
             }
 
@@ -182,7 +182,7 @@ namespace ostrich.Core
             }
             catch (ProductNotFoundException exception)
             {
-                ui.DisplayProductNotFound(exception);
+                ui.DisplayProductNotFound(exception.ProductID);
             }
         }
 
@@ -224,7 +224,7 @@ namespace ostrich.Core
             }
             catch (UserNotFoundException exception)
             {
-                ui.DisplayUserNotFound(exception);
+                ui.DisplayUserNotFound(exception.UserName);
             }
         }
 
@@ -250,7 +250,7 @@ namespace ostrich.Core
             }
             catch (ProductNotFoundException exception)
             {
-                ui.DisplayProductNotFound(exception);
+                ui.DisplayProductNotFound(exception.ProductID);
             }
         }
     }

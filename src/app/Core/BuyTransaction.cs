@@ -31,7 +31,7 @@ namespace ostrich.Core
                 throw new InsufficientCreditsException(User, Product);
 
             if (!Product.Active)
-                throw new ProductNotSaleableException(User, Product);
+                throw new ProductNotSaleableException(Product);
 
             User.Balance = newUserBalance;
         }

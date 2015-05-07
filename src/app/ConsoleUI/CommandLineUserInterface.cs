@@ -25,19 +25,14 @@ namespace ostrich.ConsoleUI
             } while (true);
         }
 
-        public void DisplayUserNotFound(UserNotFoundException exception)
+        public void DisplayUserNotFound(string userName)
         {
-            Console.WriteLine("User '{0}' was not found.", exception.UserName);
+            Console.WriteLine("User '{0}' was not found.", userName);
         }
 
         public void DisplayProductNotFound(int productId)
         {
             Console.WriteLine("Product with ID {0} was not found.", productId);
-        }
-
-        public void DisplayProductNotFound(ProductNotFoundException exception)
-        {
-            Console.WriteLine("Product '{0}' was not found.", exception.ProductID);
         }
 
         public void DisplayUserInfo(User user, IEnumerable<BuyTransaction> latestTransactions)
@@ -88,10 +83,10 @@ namespace ostrich.ConsoleUI
             Environment.Exit(0);
        }
 
-        public void DisplayInsufficientCash(InsufficientCreditsException exception)
+        public void DisplayInsufficientCash(User user, Product product)
         {
             Console.WriteLine("User '{0}' has insufficient funds to buy '{1}' that costs {2}.", 
-                exception.User.UserName, exception.Product.Name, exception.Product.Price);
+                product.Name, product.Price);
         }
 
         public void DisplayGeneralError(string errorString)
@@ -99,9 +94,10 @@ namespace ostrich.ConsoleUI
             Console.WriteLine(errorString);
         }
 
-        public void DisplayProductNotSaleable(ProductNotSaleableException exception)
+
+        public void DisplayProductNotSaleable(Product product)
         {
-            Console.WriteLine(exception.Message);
+            Console.WriteLine("Product '{0}' is not saleable.", product.ProductID);
         }
 
         public void DisplayCashInserted(InsertCashTransaction transaction)

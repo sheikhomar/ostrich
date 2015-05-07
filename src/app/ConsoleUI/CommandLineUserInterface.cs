@@ -85,8 +85,8 @@ namespace ostrich.ConsoleUI
 
         public void DisplayInsufficientCash(User user, Product product)
         {
-            Console.WriteLine("User '{0}' has insufficient funds to buy '{1}' that costs {2}.", 
-                product.Name, product.Price);
+            Console.WriteLine("User '{0}' has insufficient funds to buy '{1}'.", 
+                user.UserName, product.Name);
         }
 
         public void DisplayGeneralError(string errorString)

@@ -18,6 +18,6 @@ namespace ostrich.Core
         void DisplayCashInserted(InsertCashTransaction transaction);
         void DisplaceProducts(IEnumerable<Product> products);
         void DisplayUsers(IEnumerable<User> users);
-        
+        void DisplayBalanceOverflow(User user);
     }
 }

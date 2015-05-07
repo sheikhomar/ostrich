@@ -42,6 +42,7 @@
     <Compile Include="Controller.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="Exceptions\InsufficientCreditsException.cs" />
+    <Compile Include="Exceptions\BalanceOverflowException.cs" />
     <Compile Include="Exceptions\ProductExistsException.cs" />
     <Compile Include="Exceptions\ProductNotFoundException.cs" />
     <Compile Include="Exceptions\ProductNotSaleableException.cs" />

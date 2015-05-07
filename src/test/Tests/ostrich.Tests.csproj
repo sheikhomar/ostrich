@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="BuyTransactionTests.cs" />
     <Compile Include="CommandArgumentCollectionTests.cs" />
+    <Compile Include="InsertCashTransactionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeasonalProductTests.cs" />
     <Compile Include="UserTests.cs" />

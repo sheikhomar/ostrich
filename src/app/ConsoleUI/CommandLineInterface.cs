@@ -119,5 +119,10 @@ namespace ostrich.ConsoleUI
             foreach (var product in users)
                 Console.WriteLine("{0}", product);
         }
+
+        public void DisplayBalanceOverflow(User user)
+        {
+            Console.WriteLine("Cannot insert more cash because user\'s maximum balance has been reached.");
+        }
     }
 }

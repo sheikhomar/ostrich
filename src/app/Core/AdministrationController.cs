@@ -111,6 +111,10 @@ namespace ostrich.Core
             {
                 UI.DisplayUserNotFound(exception.UserName);
             }
+            catch (BalanceOverflowException exception)
+            {
+                UI.DisplayBalanceOverflow(exception.User);
+            }
         }
 
         private void ListProducts()

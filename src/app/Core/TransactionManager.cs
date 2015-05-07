@@ -20,7 +20,7 @@ namespace ostrich.Core
                 throw new ArgumentNullException("product");
 
             int id = GenerateNextTransactionId();
-            return new BuyTransaction(id, user, DateTime.Now, product, product.Price * -1);
+            return new BuyTransaction(id, user, DateTime.Now, product);
         }
 
         public void Commit(Transaction transaction)

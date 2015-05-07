@@ -7,20 +7,12 @@ namespace ostrich.Core
     {
         public Product Product { get; set; }
 
-        public BuyTransaction(int id, User user, DateTime date, Product product, int amount)
-            : base(id, user, date, amount)
+        public BuyTransaction(int id, User user, DateTime date, Product product)
+            : base(id, user, date, product.Price * -1)
         {
             if (product == null) throw new ArgumentNullException("product");
 
             Product = product;
-        }
-
-        /// <summary>
-        /// Returns whether this transaction can be executed without raising an exception.
-        /// </summary>
-        public bool IsValid
-        {
-            get { return User.Balance > Amount && Product.Active; }
         }
 
         public override void Execute()

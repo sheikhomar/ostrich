@@ -22,11 +22,11 @@ namespace ostrich.Core
 
         public int Amount { get; private set; }
 
+        public abstract void Execute();
+
         public override string ToString()
         {
             return string.Format("[{0:yyyy-MM-dd HH:mm:ss}] ID={1} Amount={2}", Date, TransactionID, Amount);
         }
-
-        public abstract void Execute();
     }
 }

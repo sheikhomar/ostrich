@@ -9,7 +9,7 @@ namespace ostrich.Core
         void DisplayProductNotFound(int productId);
         void DisplayUserInfo(User user, IEnumerable<BuyTransaction> latestTransactions);
         void DisplayTooManyArgumentsError();
-        void DisplayAdminCommandNotFoundMessage(Command cmd);
+        void DisplayAdminCommandNotFoundMessage(string cmd);
         void DisplayUserBuysProduct(BuyTransaction transaction);
         void Close();
         void DisplayInsufficientCash(User user, Product product);

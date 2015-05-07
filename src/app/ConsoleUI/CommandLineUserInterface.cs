@@ -67,9 +67,9 @@ namespace ostrich.ConsoleUI
             Console.WriteLine("Your command contains too many arguments. Please try again.");
         }
 
-        public void DisplayAdminCommandNotFoundMessage(Command cmd)
+        public void DisplayAdminCommandNotFoundMessage(string commandName)
         {
-            Console.WriteLine("Administration command '{0}' is not valid.", cmd.Name);
+            Console.WriteLine("Administration command '{0}' is not valid.", commandName);
         }
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
@@ -93,7 +93,6 @@ namespace ostrich.ConsoleUI
         {
             Console.WriteLine(errorString);
         }
-
 
         public void DisplayProductNotSaleable(Product product)
         {

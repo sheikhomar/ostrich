@@ -7,7 +7,7 @@ namespace ostrich.Core
         public Product(int productId, string name, int price, bool active = true)
         {
             if (productId < 1)
-                throw new ArgumentException("Product ID cannot not be lower than 1.", "productId");
+                throw new ArgumentException("Product ID must be a positive integer.", "productId");
 
             if (name == null) 
                 throw new ArgumentNullException("name");

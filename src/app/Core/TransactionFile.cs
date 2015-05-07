@@ -20,7 +20,7 @@ namespace ostrich.Core
             using (StreamWriter writer = new StreamWriter(
                 File.Open(FilePath, FileMode.Append, FileAccess.Write, FileShare.Read)))
             {
-                transaction.Log(writer);
+                writer.WriteLine(transaction.ToString());
             }
         }
     }

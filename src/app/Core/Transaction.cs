@@ -29,10 +29,5 @@ namespace ostrich.Core
         {
             return string.Format("[{0:yyyy-MM-dd HH:mm:ss}] ID={1} UserID={2} Amount={3}", Date, TransactionID, User.UserID, Amount);
         }
-
-        public void Log(StreamWriter writer)
-        {
-            writer.WriteLine(ToString());
-        }
     }
 }

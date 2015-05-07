@@ -7,7 +7,7 @@ namespace ostrich.Core
         public CommandArgumentCollection(string commandString)
         {
             if (commandString != null)
-                RawArguments = commandString.Trim().Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                RawArguments = commandString.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             else
                 RawArguments = new string[0];
         }
@@ -31,10 +31,10 @@ namespace ostrich.Core
         {
             get
             {
-                if (index >= 0 && index < RawArguments.Length)
-                    return RawArguments[index];
+                if (index < 0 || index >= RawArguments.Length)
+                    throw new ArgumentOutOfRangeException("index");
 
-                return null;
+                return RawArguments[index];
             }
         }
         

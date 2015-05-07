@@ -7,14 +7,17 @@ namespace ostrich.ConsoleUI
 {
     public class CommandLineInterface : IUserInterface
     {
+        private bool running;
+
         public void Start(StregsystemCommandParser parser)
         {
+            running = true;
             Console.WriteLine("Your wish is my command.");
             do
             {
                 Console.Write("# ");
                 parser.Parse(Console.ReadLine());
-            } while (true);
+            } while (running);
         }
 
         public void DisplayUserNotFound(string userName)
@@ -71,9 +74,8 @@ namespace ostrich.ConsoleUI
         
         public void Close()
         {
-            // http://stackoverflow.com/questions/10286056/what-is-the-command-to-exit-a-console-application-in-c
-            Environment.Exit(0);
-       }
+            running = false;
+        }
 
         public void DisplayInsufficientCash(User user, Product product)
         {

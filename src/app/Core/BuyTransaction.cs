@@ -22,7 +22,7 @@ namespace ostrich.Core
         {
             int newUserBalance = User.Balance - Product.Price;
 
-            if (newUserBalance < 0)
+            if (newUserBalance < 0 && !Product.CanBeBoughtOnCredit)
                 throw new InsufficientCreditsException(User, Product);
 
             if (!Product.Active)

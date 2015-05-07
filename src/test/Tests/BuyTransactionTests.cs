@@ -8,7 +8,6 @@ namespace ostrich.Tests
     [TestFixture]
     public class BuyTransactionTests
     {
-
         [Test]
         public void Constructor_should_not_allow_null_product()
         {
@@ -94,6 +93,18 @@ namespace ostrich.Tests
         }
 
         [Test]
+        public void Execute_should_allow_product_to_be_bought_on_credit()
+        {
+            var user = new User(1, "Ol'", "Gil", "oldgil") { Balance = 900 };
+            var product = new Product(1, "Tun fish", 1000) { Active = true, CanBeBoughtOnCredit = true };
+            var transaction = new BuyTransaction(1, user, DateTime.Now, product);
+
+            transaction.Execute();
+
+            Assert.AreEqual(-100, user.Balance);
+        }
+
+        [Test]
         public void ToString_should_return_correct_STRING()
         {
             var user = new User(1, "Mr.", "Burns", "evilcorp111one") { Balance = 2147483647 };
@@ -103,6 +114,7 @@ namespace ostrich.Tests
 
             Assert.IsTrue(str.Contains("ProductID=2"));
             Assert.IsTrue(str.Contains("Type=Buy"));
+            Assert.IsTrue(str.Contains("Amount=-10000000"));
         }
     }
 }

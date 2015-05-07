@@ -1,0 +1,8 @@
+language: csharp
+solution: ostrich.sln
+
+before_install:
+ - chmod ugo+x ./build.sh
+
+script:
+ - ./build.sh

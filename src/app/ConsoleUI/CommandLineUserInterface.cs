@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using ostrich.ConsoleUI;
+using ostrich.Core;
+using ostrich.Core.Exceptions;
 
-namespace ConsoleUI
+namespace ostrich.ConsoleUI
 {
     public class CommandLineUserInterface : IUserInterface
     {
@@ -32,7 +32,7 @@ namespace ConsoleUI
 
         public void DisplayProductNotFound(int productId)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Product with ID {0} was not found.", productId);
         }
 
         public void DisplayProductNotFound(ProductNotFoundException exception)

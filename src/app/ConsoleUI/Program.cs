@@ -1,19 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.SqlServer.Server;
+﻿using ostrich.Core;
 
-namespace ConsoleUI
+namespace ostrich.ConsoleUI
 {
-    
-
     class Program
     {
         static void Main(string[] args)
         {
-
-            // Transaktioen skal skrives ud på fil.
             IStregsystem stregsystem = new Stregsystem();
             CommandLineUserInterface cli = new CommandLineUserInterface(stregsystem);
             StregsystemCommandParser parser = new StregsystemCommandParser(cli, stregsystem);

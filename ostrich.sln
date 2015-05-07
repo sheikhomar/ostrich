@@ -3,7 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "src\app\ConsoleUI\ConsoleUI.csproj", "{68DA4967-6F45-4C32-812F-2018CC0E28FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ostrich.ConsoleUI", "src\app\ConsoleUI\ostrich.ConsoleUI.csproj", "{68DA4967-6F45-4C32-812F-2018CC0E28FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ostrich.Core", "src\app\Core\ostrich.Core.csproj", "{5BED9618-7708-4F10-8B2D-C6F84FCAFF02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ostrich.Tests", "src\test\Tests\ostrich.Tests.csproj", "{50E101B2-F6B9-4A02-B655-C4DA033A2D57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{5A33F890-CE2B-4DF7-A728-7B9646BA1B3E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+		paket.dependencies = paket.dependencies
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +30,14 @@ Global
 		{68DA4967-6F45-4C32-812F-2018CC0E28FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68DA4967-6F45-4C32-812F-2018CC0E28FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68DA4967-6F45-4C32-812F-2018CC0E28FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BED9618-7708-4F10-8B2D-C6F84FCAFF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BED9618-7708-4F10-8B2D-C6F84FCAFF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BED9618-7708-4F10-8B2D-C6F84FCAFF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BED9618-7708-4F10-8B2D-C6F84FCAFF02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50E101B2-F6B9-4A02-B655-C4DA033A2D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50E101B2-F6B9-4A02-B655-C4DA033A2D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50E101B2-F6B9-4A02-B655-C4DA033A2D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50E101B2-F6B9-4A02-B655-C4DA033A2D57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

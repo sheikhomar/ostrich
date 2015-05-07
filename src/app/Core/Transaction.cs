@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ostrich.Core
 {
@@ -26,7 +27,12 @@ namespace ostrich.Core
 
         public override string ToString()
         {
-            return string.Format("[{0:yyyy-MM-dd HH:mm:ss}] ID={1} Amount={2}", Date, TransactionID, Amount);
+            return string.Format("[{0:yyyy-MM-dd HH:mm:ss}] ID={1} UserID={2} Amount={3}", Date, TransactionID, User.UserID, Amount);
+        }
+
+        public void Log(StreamWriter writer)
+        {
+            writer.WriteLine(ToString());
         }
     }
 }

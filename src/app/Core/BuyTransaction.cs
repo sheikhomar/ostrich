@@ -30,7 +30,7 @@ namespace ostrich.Core
 
         public override string ToString()
         {
-            return String.Format("{0} User '{1}' has bought '{2}'", base.ToString(), User.UserName, Product.Name);
+            return String.Format("{0} Type=Buy ProductID={1}", base.ToString(), Product.ProductID);
         }
     }
 }

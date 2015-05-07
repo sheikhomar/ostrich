@@ -17,11 +17,10 @@ namespace ostrich.Core
         {
             // TODO: assume that file encoding is Encoding.Default
             var reader = new StreamReader("products.csv", Encoding.Default);
-            ProductCatalogImporter importer = new ProductCatalogImporter(reader);
-
+            var importer = new ProductCatalogImporter(reader);
+            var transactionFile = new TransactionFile("transactions.log");
             productCatalog = importer.Import();
-
-            transactions = new TransactionManager();
+            transactions = new TransactionManager(transactionFile);
 
             userRepository = new UserRepository();
             userRepository.Add(new User(1, "Joakim", "Von And", "b") { Balance = int.MaxValue });

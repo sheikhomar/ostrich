@@ -5,10 +5,16 @@ namespace ostrich.Core
 {
     public class TransactionManager
     {
+        private readonly TransactionFile transactionFile;
         private readonly IList<Transaction> transactions;
 
-        public TransactionManager()
+        public TransactionManager(TransactionFile transactionFile)
         {
+            if (transactionFile == null)
+                throw new ArgumentNullException("transactionFile");
+
+            this.transactionFile = transactionFile;
+            
             transactions = new List<Transaction>();
         }
 
@@ -30,6 +36,7 @@ namespace ostrich.Core
 
             transaction.Execute();
             transactions.Add(transaction);
+            transactionFile.Write(transaction);
         }
 
         public IEnumerable<Transaction> GetAll()

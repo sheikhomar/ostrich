@@ -58,6 +58,7 @@
     <Compile Include="DefaultBackendSystem.cs" />
     <Compile Include="StregsystemCommandParser.cs" />
     <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionFile.cs" />
     <Compile Include="TransactionManager.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserDetailsController.cs" />

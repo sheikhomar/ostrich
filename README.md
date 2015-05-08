@@ -1,6 +1,6 @@
 ostrich
 =======
-
+A console based system that replicates some of the functionality of [Fklub Stregsystem v.4](http://www.fklub.dk/treo/stregsystem/historie). The project was developed as part of the oral examination in object-oriented programming (OOP) course at Aalborg University.
 
 Building ostrich
 ----------------

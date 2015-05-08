@@ -11,6 +11,7 @@ namespace ostrich.Core
         void DisplayTooManyArgumentsError();
         void DisplayAdminCommandNotFoundMessage(string cmd);
         void DisplayUserBuysProduct(BuyTransaction transaction);
+        void DisplayUserBuysProduct(Product product, User user, int quantity);
         void Close();
         void DisplayInsufficientCash(User user, Product product);
         void DisplayGeneralError(string errorString);

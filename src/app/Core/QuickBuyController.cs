@@ -5,97 +5,85 @@ namespace ostrich.Core
 {
     public class QuickBuyController : Controller
     {
+        public const string InvalidProductIdMessage = "Please specify valid product ID.";
+        public const string InvalidQuantityMessage = "Please specify valid quantity.";
+
         public QuickBuyController(IUserInterface ui, IBackendSystem system) : base(ui, system)
         {
         }
 
         protected override void ProcessInternal(CommandArgumentCollection args)
         {
+            string userName = args[0];
+            int? quantity = null;
+            int? productId = null;
+
             if (args.Count == 2)
-                BuySingle(args);
+            {
+                quantity = 1;
+                productId = args.GetAsInt(1);
+            }
             else if (args.Count == 3)
-                BuyMultiple(args);
+            {
+                quantity = args.GetAsInt(1);
+                productId = args.GetAsInt(2);
+            }
             else
-                throw new InvalidOperationException("Cannot process command with more than 3 arguments.");
+                throw new InvalidOperationException("Invalid arguments provided.");
+
+            PerformBuy(userName, productId, quantity);
         }
 
-        protected void BuySingle(CommandArgumentCollection args)
+        private void PerformBuy(string userName, int? productId, int? quantity)
         {
-            string userName = args[0];
-            int? argument = args.GetAsInt(1);
-
-            if (!argument.HasValue)
+            if (quantity == null || quantity.Value < 1)
             {
-                string msg = string.Format("Please specify which product ID to buy. Example '{0} 11'", userName);
-                UI.DisplayGeneralError(msg);
+                UI.DisplayGeneralError(InvalidQuantityMessage);
                 return;
             }
 
-            int productId = argument.Value;
-            PerformBuy(userName, productId);
-        }
-
-
-        private void BuyMultiple(CommandArgumentCollection args)
-        {
-            string userName = args[0];
-            int? quantity = args.GetAsInt(1);
-            int? productId = args.GetAsInt(2);
-
-            if (!quantity.HasValue && quantity.Value < 1)
+            if (productId == null  || productId.Value < 1)
             {
-                UI.DisplayGeneralError("Please specify valid quantity.");
+                UI.DisplayGeneralError(InvalidProductIdMessage);
                 return;
             }
 
-            if (!productId.HasValue && productId.Value < 2)
-            {
-                UI.DisplayGeneralError("Please specify valid product ID.");
-                return;
-            }
-
-            for (int i = 0; i < quantity.Value; i++)
-            {
-                bool isSuccess = PerformBuy(userName, productId.Value);
-                if (!isSuccess)
-                    break;
-            }
-        }
-
-        private bool PerformBuy(string userName, int productId)
-        {
             try
             {
                 User user = System.GetUser(userName);
-                Product product = System.GetProduct(productId);
-                BuyTransaction transaction = System.BuyProduct(user, product);
-
-                System.ExecuteTransaction(transaction);
-
-                UI.DisplayUserBuysProduct(transaction);
+                Product product = System.GetProduct(productId.Value);
+                BuyTransaction transaction = null;
+                for (int i = 0; i < quantity; i++)
+                {
+                    transaction = System.BuyProduct(user, product);
+                    System.ExecuteTransaction(transaction);    
+                }
+                
+                if (quantity == 1 && transaction != null)
+                    UI.DisplayUserBuysProduct(transaction);
+                else
+                    UI.DisplayUserBuysProduct(product, user, quantity.Value);
             }
             catch (UserNotFoundException exception)
             {
                 UI.DisplayUserNotFound(exception.UserName);
-                return false;
             }
             catch (ProductNotFoundException exception)
             {
                 UI.DisplayProductNotFound(exception.ProductID);
-                return false;
             }
             catch (InsufficientCreditsException exception)
             {
                 UI.DisplayInsufficientCash(exception.User, exception.Product);
-                return false;
             }
             catch (ProductNotSaleableException exception)
             {
                 UI.DisplayProductNotSaleable(exception.Product);
-                return false;
             }
-
-            return true;
+            catch (BalanceUnderflowException exception)
+            {
+                UI.DisplayGeneralError(exception.Message);
+            }
         }
     }
 }

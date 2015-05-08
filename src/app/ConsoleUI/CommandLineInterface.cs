@@ -71,7 +71,12 @@ namespace ostrich.ConsoleUI
         {
             Console.WriteLine("User\n  {0}\nhas bought\n  {1}", transaction.User, transaction.Product);
         }
-        
+
+        public void DisplayUserBuysProduct(Product product, User user, int quantity)
+        {
+            Console.WriteLine("User\n  {0}\nhas bought\n  {1}\nQuantity: {2}", user, product, quantity);
+        }
+
         public void Close()
         {
             running = false;

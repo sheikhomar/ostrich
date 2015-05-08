@@ -105,7 +105,19 @@ namespace ostrich.Tests
         }
 
         [Test]
-        public void ToString_should_return_correct_STRING()
+        public void Execute_should_handle_underflow()
+        {
+            var user = new User(1, "Ol'", "Gil", "oldgil") { Balance = int.MinValue };
+            var product = new Product(1, "Tun fish") { Active = true, CanBeBoughtOnCredit = false, Price = 1 };
+            var transaction = new BuyTransaction(1, user, DateTime.Now, product);
+
+            var ex = Assert.Throws<BalanceUnderflowException>(() => transaction.Execute());
+            Assert.AreSame(user, ex.User);
+            Assert.AreEqual(int.MaxValue, ex.NewBalance);
+        }
+
+        [Test]
+        public void ToString_should_return_correct_string()
         {
             var user = new User(1, "Mr.", "Burns", "evilcorp111one") { Balance = 2147483647 };
             var product = new Product(2, "Slow-Fission Reactor") { Price = 10000000 };

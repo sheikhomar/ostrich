@@ -1,25 +1,15 @@
-﻿using System;
-
-namespace ostrich.Core.Exceptions
+﻿namespace ostrich.Core.Exceptions
 {
-    public class BalanceOverflowException : Exception
+    public class BalanceOverflowException : BalanceLimitException
     {
-        public BalanceOverflowException(User user, int newBalance)
+        public BalanceOverflowException(User user, int newBalance) 
+            : base(user, newBalance)
         {
-            if (user == null) 
-                throw new ArgumentNullException("user");
-
-            User = user;
-            NewBalance = newBalance;
         }
-
-        public User User { get; set; }
-
-        public int NewBalance { get; set; }
 
         public override string Message
         {
-            get { return "User\'s maximum balance has been reached."; }
+            get { return string.Format("Balance of user '{0}' has overflowed.", User.UserName); }
         }
     }
 }

@@ -22,6 +22,9 @@ namespace ostrich.Core
         {
             int newUserBalance = User.Balance - Product.Price;
 
+            if (User.Balance < 0 && newUserBalance > 0)
+                throw new BalanceUnderflowException(User, newUserBalance);
+
             if (newUserBalance < 0 && !Product.CanBeBoughtOnCredit)
                 throw new InsufficientCreditsException(User, Product);
 

@@ -114,6 +114,7 @@ namespace ostrich.Tests
             var ex = Assert.Throws<BalanceUnderflowException>(() => transaction.Execute());
             Assert.AreSame(user, ex.User);
             Assert.AreEqual(int.MaxValue, ex.NewBalance);
+            Assert.AreEqual(int.MinValue, user.Balance, "User balance should not change.");
         }
 
         [Test]

@@ -29,7 +29,7 @@ namespace ostrich.Tests
         }
 
         [Test]
-        public void Constructor_should_not_allow_negative_price()
+        public void Price_should_not_never_be_negative()
         {
             var product = new Product(1, "HTC One");
 

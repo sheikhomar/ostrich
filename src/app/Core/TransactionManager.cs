@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ostrich.Core
 {
@@ -42,6 +43,14 @@ namespace ostrich.Core
         public IEnumerable<Transaction> GetAll()
         {
             return transactions;
+        }
+
+        public IEnumerable<Transaction> GetAllForUser(User user)
+        {
+            if (user == null) 
+                throw new ArgumentNullException("user");
+
+            return transactions.Where(t => t.User.Equals(user));
         }
 
         private int GenerateNextTransactionId()

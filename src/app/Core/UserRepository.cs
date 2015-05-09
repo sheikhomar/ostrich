@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ostrich.Core.Exceptions;
 
 namespace ostrich.Core
 {
     public class UserRepository
     {
-        private readonly IDictionary<int, User> users;
+        private readonly IDictionary<string, User> users;
 
         public UserRepository()
         {
-            users = new Dictionary<int, User>();
+            users = new Dictionary<string, User>();
         }
 
         public void Add(User user)
@@ -17,16 +19,28 @@ namespace ostrich.Core
             if (user == null)
                 throw new ArgumentNullException("user");
 
-            // TODO: Make custom exception here.
-            if (users.ContainsKey(user.UserID))
-                throw new Exception("User already exists.");
+            if (users.ContainsKey(user.UserName))
+                throw new DuplicateUserException(user, "User with same username already exists.");
 
-            users.Add(user.UserID, user);
+            if (users.Values.Contains(user))
+                throw new DuplicateUserException(user, "User with same ID already exists.");
+
+            users.Add(user.UserName, user);
         }
 
         public IEnumerable<User> GetUsers()
         {
             return users.Values;
+        }
+
+        public User this[string userName]
+        {
+            get
+            {
+                if (!users.ContainsKey(userName))
+                    throw new UserNotFoundException(userName);
+                return users[userName];
+            }
         }
     }
 }

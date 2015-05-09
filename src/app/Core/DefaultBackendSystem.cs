@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using ostrich.Core.Exceptions;
 
 namespace ostrich.Core
 {
@@ -13,18 +11,18 @@ namespace ostrich.Core
         private readonly UserRepository userRepository;
         private readonly TransactionManager transactions;
 
-        public DefaultBackendSystem()
+        public DefaultBackendSystem(ProductCatalog productCatalog, UserRepository userRepository, TransactionManager transactions)
         {
-            // TODO: assume that file encoding is Encoding.Default
-            var reader = new StreamReader("products.csv", Encoding.Default);
-            var importer = new ProductCatalogImporter(reader);
-            var transactionFile = new TransactionFile("transactions.log");
-            productCatalog = importer.Import();
-            transactions = new TransactionManager(transactionFile);
+            if (productCatalog == null) 
+                throw new ArgumentNullException("productCatalog");
+            if (userRepository == null) 
+                throw new ArgumentNullException("userRepository");
+            if (transactions == null) 
+                throw new ArgumentNullException("transactions");
 
-            userRepository = new UserRepository();
-            userRepository.Add(new User(1, "Joakim", "Von And", "b") { Balance = int.MaxValue });
-            userRepository.Add(new User(2, "Anders", "And", "a") { Balance = 6000 });
+            this.productCatalog = productCatalog;
+            this.userRepository = userRepository;
+            this.transactions = transactions;
         }
 
         public BuyTransaction BuyProduct(User user, Product product)
@@ -49,20 +47,12 @@ namespace ostrich.Core
 
         public User GetUser(string userName)
         {
-            var user = userRepository.GetUsers().FirstOrDefault(u => u.UserName == userName);
-
-            if (user == null)
-                throw new UserNotFoundException(userName);
-
-            return user;
+            return userRepository[userName];
         }
 
         public IEnumerable<Transaction> GetTransactionList(User user)
         {
-            if (user == null) 
-                throw new ArgumentNullException("user");
-
-            return transactions.GetAll().Where(t => t.User.Equals(user));
+            return transactions.GetAllForUser(user);
         }
 
         public IEnumerable<Product> GetActiveProducts()

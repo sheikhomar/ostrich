@@ -106,7 +106,7 @@ namespace ostrich.ConsoleUI
 
         public void DisplaceProducts(IEnumerable<Product> products)
         {
-            Console.WriteLine("Active products:");
+            Console.WriteLine("Products:");
             Console.WriteLine("{0,-5}{1}\t{2,-50}\t{3,-10}", "ID", " ", "Products", "Price");
             foreach (var product in products)
             {
@@ -121,8 +121,15 @@ namespace ostrich.ConsoleUI
         public void DisplayUsers(IEnumerable<User> users)
         {
             Console.WriteLine("Users:");
-            foreach (var product in users)
-                Console.WriteLine("{0}", product);
+            Console.WriteLine("{0,-3}\t{1,-10}\t{2,-20}\t{3,-10}", "ID", "User name", "Full name", "Balance");
+            foreach (var user in users)
+            {
+                Console.WriteLine("{0,3}\t{1,-10}\t{2,-20}\t{3,10}",
+                    user.UserID,
+                    user.UserName,
+                    user.FullName,
+                    user.FormattedBalance);
+            }
         }
 
         public void DisplayBalanceOverflow(User user)

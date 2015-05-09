@@ -14,7 +14,7 @@ namespace ostrich.ConsoleUI
             
             var productCatalog = importer.Import();
 
-            var transactionFile = new TransactionFile("transactions.log");
+            var transactionFile = new TransactionFileStore("transactions.log");
             var transactions = new TransactionManager(transactionFile);
 
             var userRepository = new UserRepository();

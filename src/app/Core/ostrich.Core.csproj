@@ -44,6 +44,7 @@
     <Compile Include="CsvReader.cs" />
     <Compile Include="Exceptions\BalanceLimitException.cs" />
     <Compile Include="Exceptions\BalanceUnderflowException.cs" />
+    <Compile Include="Exceptions\DuplicateTransactionException.cs" />
     <Compile Include="Exceptions\DuplicateUserException.cs" />
     <Compile Include="Exceptions\InsufficientCreditsException.cs" />
     <Compile Include="Exceptions\BalanceOverflowException.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="IController.cs" />
     <Compile Include="InsertCashTransaction.cs" />
     <Compile Include="IBackendSystem.cs" />
+    <Compile Include="ITransactionStore.cs" />
     <Compile Include="IUserInterface.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductCatalog.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="SeasonalProduct.cs" />
     <Compile Include="DefaultBackendSystem.cs" />
     <Compile Include="Transaction.cs" />
-    <Compile Include="TransactionFile.cs" />
+    <Compile Include="TransactionFileStore.cs" />
     <Compile Include="TransactionManager.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserDetailsController.cs" />

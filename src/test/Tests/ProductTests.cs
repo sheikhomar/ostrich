@@ -46,12 +46,13 @@ namespace ostrich.Tests
             Assert.AreEqual("HTC Two", product.Name);
         }
 
-        [Test]
-        public void FormattedPrice_should_return_correct_string()
+        [TestCase(1000, Result = "10.00 kr.")]
+        [TestCase(4999, Result = "49.99 kr.")]
+        [TestCase(0, Result = "0.00 kr.")]
+        public string FormattedPrice_tests(int price)
         {
-            var product = new Product(1123, "HTC One") { Price = 10000 };
-
-            Assert.AreEqual("100.00 kr.", product.FormattedPrice);
+            var product = new Product(1123, "HTC One") { Price = price };
+            return product.FormattedPrice;
         }
 
         [Test]

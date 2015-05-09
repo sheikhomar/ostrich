@@ -40,7 +40,7 @@ namespace ostrich.Core
 
         public string FormattedPrice
         {
-            get { return String.Format("{0:N2} kr.", Price/100); }
+            get { return string.Format("{0:N2} kr.", Price/100D); }
         }
     }
 }

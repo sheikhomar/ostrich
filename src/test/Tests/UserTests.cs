@@ -181,5 +181,15 @@ namespace ostrich.Tests
 
             Assert.AreEqual(2341.GetHashCode(), user.GetHashCode());
         }
+
+        [TestCase(4999, Result = "49.99 kr.")]
+        [TestCase(0, Result = "0.00 kr.")]
+        [TestCase(-1123, Result = "-11.23 kr.")]
+        public string FormattedBalance_tests(int newBalance)
+        {
+            var user = new User(1, "Homer", "Simpson", "home_sim");
+            user.Balance = newBalance;
+            return user.FormattedBalance;
+        }
     }
 }

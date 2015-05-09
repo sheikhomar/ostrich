@@ -61,6 +61,11 @@ namespace ostrich.Core
             get { return string.Format("{0} {1}", FirstName, LastName); }
         }
 
+        public string FormattedBalance
+        {
+            get { return string.Format("{0:N2} kr.", Balance/100D);; }
+        }
+
         public bool Equals(User other)
         {
             return other != null && other.UserID == UserID;

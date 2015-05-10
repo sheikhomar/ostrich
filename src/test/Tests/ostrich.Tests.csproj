@@ -50,6 +50,7 @@
     <Compile Include="SeasonalProductTests.cs" />
     <Compile Include="TransactionManagerTests.cs" />
     <Compile Include="UserDetailsCommandProcessorTests.cs" />
+    <Compile Include="UserRepositoryTests.cs" />
     <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>

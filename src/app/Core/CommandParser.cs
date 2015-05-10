@@ -25,7 +25,7 @@ namespace ostrich.Core
             };
         }
 
-        public void Parse(string command)
+        public ParsingResult Parse(string command)
         {
             CommandArgumentCollection args = new CommandArgumentCollection(command);
             ICommandProcessor commandProcessor = processors[CommandType.Unknown];
@@ -37,7 +37,7 @@ namespace ostrich.Core
             else if (args.Count == 2 || args.Count == 3)
                 commandProcessor = processors[CommandType.QuickBuy];
 
-            commandProcessor.Process(args);
+            return new ParsingResult(commandProcessor, args);
         }
     }
 }

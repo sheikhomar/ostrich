@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParsingResult.cs" />
     <Compile Include="Processors\AdministrationCommandProcessor.cs" />
     <Compile Include="BuyTransaction.cs" />
     <Compile Include="CommandArgumentCollection.cs" />

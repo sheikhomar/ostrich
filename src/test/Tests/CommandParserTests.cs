@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
 using ostrich.Core;
@@ -36,157 +35,43 @@ namespace ostrich.Tests
             Assert.AreEqual("system", ex.ParamName);
         }
 
-
-        [Test]
-        public void Parse_should_respond_empty_command_with_error()
+        [TestCase("")]
+        [TestCase("Now the world has gone to bed")]
+        public void Parse_should_return_correct_processor_if_command_is_invalid(string command)
         {
-            parser.Parse("");
+            ParsingResult result = parser.Parse(command);
 
-            ui.Received(1).DisplayGeneralError(InvalidCommandProcessor.EmptyCommandErrorMessage);
+            Assert.IsTrue(result.Processor is InvalidCommandProcessor);
         }
 
-        [Test]
-        public void Parse_should_respond_to_too_many_arguments()
+        [TestCase("marvin")]
+        [TestCase("ouf1111_000")]
+        public void Parse_should_return_correct_processor_if_user_details_command(string command)
         {
-            parser.Parse("Now the world has gone to bed");
+            ParsingResult result = parser.Parse(command);
 
-            ui.Received(1).DisplayTooManyArgumentsError();
+            Assert.IsTrue(result.Processor is UserDetailsCommandProcessor);
         }
 
-        [Test]
-        public void Parse_should_process_user_details_command()
+        [TestCase("marvin 7738")]
+        [TestCase("marvin 2 7738")]
+        public void Parse_should_quick_buy_command(string command)
         {
-            parser.Parse("marvin");
+            ParsingResult result = parser.Parse(command);
 
-            ui.Received(1).DisplayUserInfo(Arg.Any<User>(), Arg.Any<IEnumerable<BuyTransaction>>());
+            Assert.IsTrue(result.Processor is QuickBuyCommandProcessor);
         }
 
-        [Test]
-        public void Parse_should_quick_buy_command()
+        [TestCase(":q")]
+        [TestCase(":quit")]
+        [TestCase(":activate 123")]
+        [TestCase(":addcredits marvin 100000")]
+        [TestCase(":makecoffe --username marvin --quantity 100000 --timeframe=1min")]
+        public void Parse_should_recognize_administration_commands(string command)
         {
-            parser.Parse("marvin 7738");
+            ParsingResult result = parser.Parse(command);
 
-            ui.Received(1).DisplayUserBuysProduct(Arg.Any<BuyTransaction>());
-        }
-
-        [Test]
-        public void Parse_should_understand_q_command()
-        {
-            parser.Parse(":q");
-
-            ui.Received().Close();
-        }
-
-        [Test]
-        public void Parse_should_understand_quit_command()
-        {
-            parser.Parse(":quit");
-
-            ui.Received().Close();
-        }
-
-        [Test]
-        public void Parse_should_understand_activate_command()
-        {
-            Product product = new Product(123, "Pizza") { Active = false };
-            system.GetProduct(123).Returns(product);
-
-            parser.Parse(":activate 123");
-
-            Assert.IsTrue(product.Active);
-        }
-
-        [Test]
-        public void Parse_should_understand_deactivate_command()
-        {
-            Product product = new Product(134, "Burger") { Active = true };
-            system.GetProduct(134).Returns(product);
-
-            parser.Parse(":deactivate 134");
-
-            Assert.IsFalse(product.Active);
-        }
-
-        [Test]
-        public void Parse_should_not_activate_seasonal_product()
-        {
-            Product product = new SeasonalProduct(1, "UniRun");
-            system.GetProduct(1).Returns(product);
-
-            parser.Parse(":activate 1");
-
-            ui.Received().DisplayGeneralError(Arg.Is<string>(arg => arg.Contains("seasonal product")));
-        }
-
-        [Test]
-        public void Parse_should_not_deactivate_seasonal_product()
-        {
-            Product product = new SeasonalProduct(1, "UniRun");
-            system.GetProduct(1).Returns(product);
-
-            parser.Parse(":deactivate 1");
-            
-            ui.Received().DisplayGeneralError(Arg.Is<string>(arg => arg.Contains("seasonal product")));
-        }
-
-        [Test]
-        public void Parse_should_understand_crediton_command()
-        {
-            Product product = new Product(123, "Pizza") { CanBeBoughtOnCredit = false };
-            system.GetProduct(123).Returns(product);
-
-            parser.Parse(":crediton 123");
-
-            Assert.IsTrue(product.CanBeBoughtOnCredit);
-        }
-
-        [Test]
-        public void Parse_should_understand_creditoff_command()
-        {
-            Product product = new Product(134, "Burger") { CanBeBoughtOnCredit = true };
-            system.GetProduct(134).Returns(product);
-
-            parser.Parse(":creditoff 134");
-
-            Assert.IsFalse(product.CanBeBoughtOnCredit);
-        }
-
-        [Test]
-        public void Parse_should_understand_addcredits_command()
-        {
-            User user = new User(1, "Homer", "Simpson", "homer") { Balance = 0 };
-            InsertCashTransaction transaction = new InsertCashTransaction(1, user, DateTime.Now, 90);
-            system.GetUser("homer").Returns(user);
-            system.AddCreditsToAccount(user, 1000).Returns(transaction);
-
-            parser.Parse(":addcredits homer 1000");
-
-            system.Received().ExecuteTransaction(transaction);
-            ui.Received().DisplayCashInserted(transaction);
-        }
-
-        [TestCase(":p")]
-        [TestCase(":list-products")]
-        public void Parse_should_understand_list_products_command(string commandName)
-        {
-            IList<Product> products = new List<Product>();
-            system.GetActiveProducts().Returns(products);
-
-            parser.Parse(commandName);
-
-            ui.Received().DisplaceProducts(products);
-        }
-
-        [TestCase(":u")]
-        [TestCase(":list-users")]
-        public void Parse_should_understand_list_users_command(string commandName)
-        {
-            IList<User> users = new List<User>();
-            system.GetUsers().Returns(users);
-
-            parser.Parse(commandName);
-
-            ui.Received().DisplayUsers(users);
+            Assert.IsTrue(result.Processor is AdministrationCommandProcessor);
         }
     }
 }

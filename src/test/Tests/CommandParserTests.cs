@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
 using ostrich.Core;
+using ostrich.Core.Processors;
 
 namespace ostrich.Tests
 {
@@ -41,7 +42,7 @@ namespace ostrich.Tests
         {
             parser.Parse("");
 
-            ui.Received(1).DisplayGeneralError(CommandNotFoundController.EmptyCommandErrorMessage);
+            ui.Received(1).DisplayGeneralError(InvalidCommandProcessor.EmptyCommandErrorMessage);
         }
 
         [Test]

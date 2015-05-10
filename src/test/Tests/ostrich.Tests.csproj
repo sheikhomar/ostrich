@@ -46,10 +46,10 @@
     <Compile Include="InsertCashTransactionTests.cs" />
     <Compile Include="ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuickBuyControllerTests.cs" />
+    <Compile Include="QuickBuyCommandProcessorTests.cs" />
     <Compile Include="SeasonalProductTests.cs" />
     <Compile Include="TransactionManagerTests.cs" />
-    <Compile Include="UserDetailsControllerTests.cs" />
+    <Compile Include="UserDetailsCommandProcessorTests.cs" />
     <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>

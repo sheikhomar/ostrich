@@ -2,9 +2,9 @@ using System;
 
 namespace ostrich.Core
 {
-    public abstract class Controller : IController
+    public abstract class CommandProcessor : ICommandProcessor
     {
-        protected Controller(IUserInterface ui, IBackendSystem system)
+        protected CommandProcessor(IUserInterface ui, IBackendSystem system)
         {
             if (ui == null) 
                 throw new ArgumentNullException("ui");

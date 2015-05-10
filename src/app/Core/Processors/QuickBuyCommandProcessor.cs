@@ -1,14 +1,14 @@
 using System;
 using ostrich.Core.Exceptions;
 
-namespace ostrich.Core
+namespace ostrich.Core.Processors
 {
-    public class QuickBuyController : Controller
+    public class QuickBuyCommandProcessor : CommandProcessor
     {
         public const string InvalidProductIdMessage = "Please specify valid product ID.";
         public const string InvalidQuantityMessage = "Please specify valid quantity.";
 
-        public QuickBuyController(IUserInterface ui, IBackendSystem system) : base(ui, system)
+        public QuickBuyCommandProcessor(IUserInterface ui, IBackendSystem system) : base(ui, system)
         {
         }
 

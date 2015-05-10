@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using ostrich.Core.Processors;
 
 namespace ostrich.Core
 {
     public class CommandParser
     {
-        private readonly IDictionary<CommandType, IController> controllers;
+        private readonly IDictionary<CommandType, ICommandProcessor> processors;
 
         public CommandParser(IUserInterface ui, IBackendSystem system)
         {
@@ -15,28 +16,28 @@ namespace ostrich.Core
             if (system == null) 
                 throw new ArgumentNullException("system");
 
-            controllers = new Dictionary<CommandType, IController>
+            processors = new Dictionary<CommandType, ICommandProcessor>
             {
-                {CommandType.Unknown, new CommandNotFoundController(ui, system)},
-                {CommandType.Administration, new AdministrationController(ui, system)},
-                {CommandType.UserDetails, new UserDetailsController(ui, system)},
-                {CommandType.QuickBuy, new QuickBuyController(ui, system)},
+                {CommandType.Unknown, new InvalidCommandProcessor(ui, system)},
+                {CommandType.Administration, new AdministrationCommandProcessor(ui, system)},
+                {CommandType.UserDetails, new UserDetailsCommandProcessor(ui, system)},
+                {CommandType.QuickBuy, new QuickBuyCommandProcessor(ui, system)},
             };
         }
 
         public void Parse(string command)
         {
             CommandArgumentCollection args = new CommandArgumentCollection(command);
-            IController controller = controllers[CommandType.Unknown];
+            ICommandProcessor commandProcessor = processors[CommandType.Unknown];
 
-            if (AdministrationController.IsAdminCommand(command))
-                controller = controllers[CommandType.Administration];
+            if (AdministrationCommandProcessor.IsAdminCommand(command))
+                commandProcessor = processors[CommandType.Administration];
             else if (args.Count == 1)
-                controller = controllers[CommandType.UserDetails];
+                commandProcessor = processors[CommandType.UserDetails];
             else if (args.Count == 2 || args.Count == 3)
-                controller = controllers[CommandType.QuickBuy];
+                commandProcessor = processors[CommandType.QuickBuy];
 
-            controller.Process(args);
+            commandProcessor.Process(args);
         }
     }
 }

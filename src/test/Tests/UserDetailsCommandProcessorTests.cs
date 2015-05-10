@@ -6,22 +6,23 @@ using NSubstitute;
 using NUnit.Framework;
 using ostrich.Core;
 using ostrich.Core.Exceptions;
+using ostrich.Core.Processors;
 
 namespace ostrich.Tests
 {
     [TestFixture]
-    public class UserDetailsControllerTests
+    public class UserDetailsCommandProcessorTests
     {
         private IUserInterface ui;
         private IBackendSystem system;
-        private UserDetailsController controller;
+        private UserDetailsCommandProcessor commandProcessor;
 
         [SetUp]
         public void Setup()
         {
             ui = Substitute.For<IUserInterface>();
             system = Substitute.For<IBackendSystem>();
-            controller = new UserDetailsController(ui, system);
+            commandProcessor = new UserDetailsCommandProcessor(ui, system);
         }
         
         [Test]
@@ -31,7 +32,7 @@ namespace ostrich.Tests
                 _ => { throw new UserNotFoundException("ahmed-dead-terrorist"); });
 
             var args = new CommandArgumentCollection("ahmed-dead-terrorist");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             ui.Received().DisplayUserNotFound("ahmed-dead-terrorist");
         }
@@ -50,7 +51,7 @@ namespace ostrich.Tests
             system.GetTransactionList(user).Returns(transactions);
 
             var args = new CommandArgumentCollection("wobra");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             BuyTransaction[] expectedTransactions = { t2, t3 };
             var argChecker = Arg.Is<IEnumerable<BuyTransaction>>(l => l.SequenceEqual(expectedTransactions));

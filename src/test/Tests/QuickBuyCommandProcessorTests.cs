@@ -3,22 +3,23 @@ using NSubstitute;
 using NUnit.Framework;
 using ostrich.Core;
 using ostrich.Core.Exceptions;
+using ostrich.Core.Processors;
 
 namespace ostrich.Tests
 {
     [TestFixture]
-    public class QuickBuyControllerTests
+    public class QuickBuyCommandProcessorTests
     {
         private IUserInterface ui;
         private IBackendSystem system;
-        private QuickBuyController controller;
+        private QuickBuyCommandProcessor commandProcessor;
 
         [SetUp]
         public void Setup()
         {
             ui = Substitute.For<IUserInterface>();
             system = Substitute.For<IBackendSystem>();
-            controller = new QuickBuyController(ui, system);
+            commandProcessor = new QuickBuyCommandProcessor(ui, system);
         }
 
 
@@ -26,28 +27,28 @@ namespace ostrich.Tests
         public void Process_should_throw_exception_if_too_few_arguments()
         {
             var args = new CommandArgumentCollection("yogibear");
-            Assert.Throws<InvalidOperationException>(() => controller.Process(args));
+            Assert.Throws<InvalidOperationException>(() => commandProcessor.Process(args));
         }
 
         [Test]
         public void Process_should_throw_exception_if_too_many_arguments()
         {
             var args = new CommandArgumentCollection("yogibear 5 35124 12323");
-            Assert.Throws<InvalidOperationException>(() => controller.Process(args));
+            Assert.Throws<InvalidOperationException>(() => commandProcessor.Process(args));
         }
         
-        [TestCase("yogibear -1", QuickBuyController.InvalidProductIdMessage)]
-        [TestCase("yogibear 0", QuickBuyController.InvalidProductIdMessage)]
-        [TestCase("yogibear 1.0", QuickBuyController.InvalidProductIdMessage)]
-        [TestCase("yogibear picnic", QuickBuyController.InvalidProductIdMessage)]
-        [TestCase("yogibear four 12", QuickBuyController.InvalidQuantityMessage)]
-        [TestCase("yogibear 0 12", QuickBuyController.InvalidQuantityMessage)]
-        [TestCase("yogibear -1 12", QuickBuyController.InvalidQuantityMessage)]
-        [TestCase("yogibear 1.0 12", QuickBuyController.InvalidQuantityMessage)]
+        [TestCase("yogibear -1", QuickBuyCommandProcessor.InvalidProductIdMessage)]
+        [TestCase("yogibear 0", QuickBuyCommandProcessor.InvalidProductIdMessage)]
+        [TestCase("yogibear 1.0", QuickBuyCommandProcessor.InvalidProductIdMessage)]
+        [TestCase("yogibear picnic", QuickBuyCommandProcessor.InvalidProductIdMessage)]
+        [TestCase("yogibear four 12", QuickBuyCommandProcessor.InvalidQuantityMessage)]
+        [TestCase("yogibear 0 12", QuickBuyCommandProcessor.InvalidQuantityMessage)]
+        [TestCase("yogibear -1 12", QuickBuyCommandProcessor.InvalidQuantityMessage)]
+        [TestCase("yogibear 1.0 12", QuickBuyCommandProcessor.InvalidQuantityMessage)]
         public void Process_should_invalid_args(string command, string errorMessage)
         {
             var args = new CommandArgumentCollection(command);
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             ui.Received().DisplayGeneralError(Arg.Is<string>(str => str.Contains(errorMessage)));
         }
@@ -63,7 +64,7 @@ namespace ostrich.Tests
             system.BuyProduct(user, product).Returns(transaction);
 
             var args = new CommandArgumentCollection("yogibear 2340");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             system.Received().ExecuteTransaction(transaction);
             ui.Received().DisplayUserBuysProduct(transaction);
@@ -81,7 +82,7 @@ namespace ostrich.Tests
             system.BuyProduct(user, product).Returns(transaction);
 
             var args = new CommandArgumentCollection("yogibear 5 12340");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             system.Received(5).ExecuteTransaction(transaction);
             ui.Received().DisplayUserBuysProduct(product, user, 5);
@@ -95,7 +96,7 @@ namespace ostrich.Tests
                 _ => { throw new UserNotFoundException("darwin"); });
             
             var args = new CommandArgumentCollection("darwin 2340");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             ui.Received().DisplayUserNotFound("darwin");
         }
@@ -108,7 +109,7 @@ namespace ostrich.Tests
             system.GetProduct(42).Returns(_ => { throw new ProductNotFoundException(42); });
 
             var args = new CommandArgumentCollection("yogibear 42");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             ui.Received().DisplayProductNotFound(42);
         }
@@ -127,7 +128,7 @@ namespace ostrich.Tests
                 .Do(_ => { throw new InsufficientCreditsException(user, product); });
 
             var args = new CommandArgumentCollection("yogibear111one 123");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             ui.Received().DisplayInsufficientCash(user, product);
         }
@@ -146,7 +147,7 @@ namespace ostrich.Tests
                 .Do(_ => { throw new ProductNotSaleableException(product); });
 
             var args = new CommandArgumentCollection("yogibear111one 123");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             ui.Received().DisplayProductNotSaleable(product);
         }
@@ -165,7 +166,7 @@ namespace ostrich.Tests
             system.When(sys => sys.ExecuteTransaction(transaction)).Do(_ => { throw exception; });
 
             var args = new CommandArgumentCollection("yogibear111one 123");
-            controller.Process(args);
+            commandProcessor.Process(args);
 
             ui.Received().DisplayGeneralError(exception.Message);
         }

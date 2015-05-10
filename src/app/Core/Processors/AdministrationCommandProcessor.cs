@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using ostrich.Core.Exceptions;
 
-namespace ostrich.Core
+namespace ostrich.Core.Processors
 {
-    public class AdministrationController : Controller
+    public class AdministrationCommandProcessor : CommandProcessor
     {
         private readonly IDictionary<string, Action<CommandArgumentCollection>> commands;
 
-        public AdministrationController(IUserInterface ui, IBackendSystem system)
+        public AdministrationCommandProcessor(IUserInterface ui, IBackendSystem system)
             : base(ui, system)
         {
             commands = new Dictionary<string, Action<CommandArgumentCollection>>

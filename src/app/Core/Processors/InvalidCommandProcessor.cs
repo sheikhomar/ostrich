@@ -1,10 +1,10 @@
-namespace ostrich.Core
+namespace ostrich.Core.Processors
 {
-    public class CommandNotFoundController : Controller
+    public class InvalidCommandProcessor : CommandProcessor
     {
         public const string EmptyCommandErrorMessage = "Please command and I will try to obey.";
 
-        public CommandNotFoundController(IUserInterface ui, IBackendSystem system) : base(ui, system)
+        public InvalidCommandProcessor(IUserInterface ui, IBackendSystem system) : base(ui, system)
         {
         }
 

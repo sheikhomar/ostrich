@@ -1,6 +1,6 @@
 namespace ostrich.Core
 {
-    public interface IController
+    public interface ICommandProcessor
     {
         void Process(CommandArgumentCollection args);
     }

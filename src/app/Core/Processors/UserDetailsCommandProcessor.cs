@@ -1,11 +1,11 @@
 using System.Linq;
 using ostrich.Core.Exceptions;
 
-namespace ostrich.Core
+namespace ostrich.Core.Processors
 {
-    public class UserDetailsController : Controller
+    public class UserDetailsCommandProcessor : CommandProcessor
     {
-        public UserDetailsController(IUserInterface ui, IBackendSystem system) : base(ui, system)
+        public UserDetailsCommandProcessor(IUserInterface ui, IBackendSystem system) : base(ui, system)
         {
         }
 

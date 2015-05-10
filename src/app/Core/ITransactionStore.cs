@@ -2,8 +2,9 @@
 
 namespace ostrich.Core
 {
-    public interface ITransactionStore : IEnumerable<Transaction>
+    public interface ITransactionStore
     {
         void Save(Transaction transaction);
+        IList<Transaction> Load();
     }
 }

@@ -7,6 +7,7 @@ namespace ostrich.Core
 {
     public class TransactionManager
     {
+        private readonly IList<Transaction> transactions;
         private readonly ITransactionStore transactionStore;
 
         public TransactionManager(ITransactionStore transactionStore)
@@ -15,6 +16,7 @@ namespace ostrich.Core
                 throw new ArgumentNullException("transactionStore");
 
             this.transactionStore = transactionStore;
+            this.transactions = transactionStore.Load();
         }
 
         public BuyTransaction Buy(User user, Product product)
@@ -28,15 +30,15 @@ namespace ostrich.Core
             return new BuyTransaction(id, user, DateTime.Now, product);
         }
 
-        public InsertCashTransaction AddCredits(User user, int amount)
+        public InsertCashTransaction AddCredits(User user, int creditAmount)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
-            if (amount < 0)
-                throw new ArgumentOutOfRangeException("amount", amount, "Amount must be a positive integer.");
+            if (creditAmount < 0)
+                throw new ArgumentOutOfRangeException("creditAmount", creditAmount, "Amount must be a positive integer.");
 
             int id = GenerateNextTransactionId();
-            return new InsertCashTransaction(id, user, DateTime.Now, amount);
+            return new InsertCashTransaction(id, user, DateTime.Now, creditAmount);
         }
 
         public void Commit(Transaction transaction)
@@ -44,16 +46,17 @@ namespace ostrich.Core
             if (transaction == null) 
                 throw new ArgumentNullException("transaction");
 
-            if (transactionStore.Any(t => t.TransactionID == transaction.TransactionID))
+            if (transactions.Any(t => t.TransactionID == transaction.TransactionID))
                 throw new DuplicateTransactionException(transaction);
 
             transaction.Execute();
             transactionStore.Save(transaction);
+            transactions.Add(transaction);
         }
 
         public IEnumerable<Transaction> GetAll()
         {
-            return transactionStore;
+            return transactions;
         }
 
         public IEnumerable<Transaction> GetAllForUser(User user)
@@ -61,12 +64,12 @@ namespace ostrich.Core
             if (user == null) 
                 throw new ArgumentNullException("user");
 
-            return transactionStore.Where(t => t.User.Equals(user));
+            return transactions.Where(t => t.User.Equals(user));
         }
 
         private int GenerateNextTransactionId()
         {
-            var last = transactionStore.LastOrDefault();
+            var last = transactions.LastOrDefault();
             if (last != null)
                 return last.TransactionID + 1;
 

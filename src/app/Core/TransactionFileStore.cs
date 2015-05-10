@@ -7,7 +7,6 @@ namespace ostrich.Core
 {
     public class TransactionFileStore : ITransactionStore
     {
-        private readonly IList<Transaction> transactions;
 
         public TransactionFileStore(string filePath)
         {
@@ -15,16 +14,12 @@ namespace ostrich.Core
                 throw new ArgumentNullException("filePath");
 
             FilePath = filePath;
-
-            transactions = new List<Transaction>();
         }
 
         public string FilePath { get; private set; }
 
         public void Save(Transaction transaction)
         {
-            transactions.Add(transaction);
-
             using (StreamWriter writer = new StreamWriter(
                 File.Open(FilePath, FileMode.Append, FileAccess.Write, FileShare.Read)))
             {
@@ -32,19 +27,10 @@ namespace ostrich.Core
             }
         }
 
-        public IEnumerator<Transaction> GetEnumerator()
-        {
-            return transactions.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        private void LoadFromFile()
+        public IList<Transaction> Load()
         {
             // TODO: Implement if there is time.
+            return new List<Transaction>();
         }
     }
 }

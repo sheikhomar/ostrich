@@ -59,7 +59,7 @@ namespace ostrich.Core
                     System.ExecuteTransaction(transaction);    
                 }
                 
-                if (quantity == 1 && transaction != null)
+                if (quantity == 1)
                     UI.DisplayUserBuysProduct(transaction);
                 else
                     UI.DisplayUserBuysProduct(product, user, quantity.Value);

@@ -35,6 +35,39 @@ namespace ostrich.Tests
             Assert.AreEqual("system", ex.ParamName);
         }
 
+
+        [Test]
+        public void Parse_should_respond_empty_command_with_error()
+        {
+            parser.Parse("");
+
+            ui.Received(1).DisplayGeneralError(CommandNotFoundController.EmptyCommandErrorMessage);
+        }
+
+        [Test]
+        public void Parse_should_respond_to_too_many_arguments()
+        {
+            parser.Parse("Now the world has gone to bed");
+
+            ui.Received(1).DisplayTooManyArgumentsError();
+        }
+
+        [Test]
+        public void Parse_should_process_user_details_command()
+        {
+            parser.Parse("marvin");
+
+            ui.Received(1).DisplayUserInfo(Arg.Any<User>(), Arg.Any<IEnumerable<BuyTransaction>>());
+        }
+
+        [Test]
+        public void Parse_should_quick_buy_command()
+        {
+            parser.Parse("marvin 7738");
+
+            ui.Received(1).DisplayUserBuysProduct(Arg.Any<BuyTransaction>());
+        }
+
         [Test]
         public void Parse_should_understand_q_command()
         {

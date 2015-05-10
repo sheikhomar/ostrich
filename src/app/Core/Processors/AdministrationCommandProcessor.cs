@@ -36,7 +36,7 @@ namespace ostrich.Core.Processors
                 UI.DisplayAdminCommandNotFoundMessage(command);
         }
 
-        public static bool IsAdminCommand(string commandName)
+        public static bool CanProcess(string commandName)
         {
             return !string.IsNullOrWhiteSpace(commandName) && commandName.StartsWith(":");
         }
@@ -78,11 +78,7 @@ namespace ostrich.Core.Processors
                 return;
             }
 
-            ChangeProductProperty(args.GetAsInt(1), product => product.CanBeBoughtOnCredit = canBeBoughtOnCredit);
-        }
-
-        private void ChangeProductProperty(int? productId, Action<Product> changeCallback)
-        {
+            int? productId = args.GetAsInt(1);
             if (productId == null || productId.Value < 1)
             {
                 UI.DisplayGeneralError("Product ID must be a positive integer.");
@@ -92,7 +88,7 @@ namespace ostrich.Core.Processors
             try
             {
                 Product product = System.GetProduct(productId.Value);
-                changeCallback(product);
+                product.CanBeBoughtOnCredit = canBeBoughtOnCredit;
             }
             catch (ProductNotFoundException exception)
             {

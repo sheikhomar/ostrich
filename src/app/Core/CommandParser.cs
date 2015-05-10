@@ -30,7 +30,7 @@ namespace ostrich.Core
             CommandArgumentCollection args = new CommandArgumentCollection(command);
             ICommandProcessor commandProcessor = processors[CommandType.Unknown];
 
-            if (AdministrationCommandProcessor.IsAdminCommand(command))
+            if (AdministrationCommandProcessor.CanProcess(command))
                 commandProcessor = processors[CommandType.Administration];
             else if (args.Count == 1)
                 commandProcessor = processors[CommandType.UserDetails];

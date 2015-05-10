@@ -13,11 +13,27 @@ namespace ostrich.ConsoleUI
         {
             running = true;
             Console.WriteLine("Your wish is my command.");
+            DisplayHelpMenu();
+
             do
             {
                 Console.Write("# ");
                 parser.Parse(Console.ReadLine());
             } while (running);
+        }
+
+        private void DisplayHelpMenu()
+        {
+            Console.WriteLine("\nFollowing commands are avaiable to you:\n");
+            Console.WriteLine(":q | :quit                          Exit program");
+            Console.WriteLine(":p | :list-products                 List activate products");
+            Console.WriteLine(":u | :list-users                    List users");
+            Console.WriteLine(":activate <product-id>              Make product active");
+            Console.WriteLine(":deactivate <product-id>            Deactivate product");
+            Console.WriteLine(":crediton <product-id>              Allow product to be bought with credits");
+            Console.WriteLine(":creditoff <product-id>             Product can only be bought if user has sufficient funds");
+            Console.WriteLine(":addcredits <user-name> <amount>    Give user more funds");
+            Console.WriteLine();
         }
 
         public void DisplayUserNotFound(string userName)
@@ -69,12 +85,12 @@ namespace ostrich.ConsoleUI
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
-            Console.WriteLine("User\n  {0}\nhas bought\n  {1}", transaction.User, transaction.Product);
+            Console.WriteLine("User '{0}' has bought '{1}'", transaction.User.UserName, transaction.Product.Name);
         }
 
         public void DisplayUserBuysProduct(Product product, User user, int quantity)
         {
-            Console.WriteLine("User\n  {0}\nhas bought\n  {1}\nQuantity: {2}", user, product, quantity);
+            Console.WriteLine("User '{0}' has bought {1}x '{2}'", user.UserName, quantity, product.Name);
         }
 
         public void Close()
@@ -95,7 +111,7 @@ namespace ostrich.ConsoleUI
 
         public void DisplayProductNotSaleable(Product product)
         {
-            Console.WriteLine("Product '{0}' is not saleable.", product.ProductID);
+            Console.WriteLine("Product ID '{0}' is not saleable.", product.ProductID);
         }
 
         public void DisplayCashInserted(InsertCashTransaction transaction)

@@ -8,13 +8,11 @@ namespace ostrich.ConsoleUI
     {
         static void Main(string[] args)
         {
-            // TODO: assume that file encoding is Encoding.Default
-            var reader = new StreamReader("products.csv", Encoding.Default);
+            var reader = new StreamReader("products.csv", Encoding.GetEncoding(1252));
             var importer = new ProductCatalogImporter(reader);
-            
             var productCatalog = importer.Import();
 
-            var transactionFile = new TransactionFileStore("transactions.log");
+            ITransactionStore transactionFile = new TransactionFileStore("transactions.log");
             var transactions = new TransactionManager(transactionFile);
 
             var userRepository = new UserRepository();

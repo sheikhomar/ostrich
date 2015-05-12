@@ -30,7 +30,7 @@ namespace ostrich.Core
             CommandArgumentCollection args = new CommandArgumentCollection(command);
             ICommandProcessor commandProcessor = processors[CommandType.Unknown];
 
-            if (AdministrationCommandProcessor.CanProcess(command))
+            if (IsAdminCommand(command))
                 commandProcessor = processors[CommandType.Administration];
             else if (args.Count == 1)
                 commandProcessor = processors[CommandType.UserDetails];
@@ -38,6 +38,11 @@ namespace ostrich.Core
                 commandProcessor = processors[CommandType.QuickBuy];
 
             return new ParsingResult(commandProcessor, args);
+        }
+
+        private bool IsAdminCommand(string command)
+        {
+            return !string.IsNullOrWhiteSpace(command) && command.StartsWith(":");
         }
     }
 }

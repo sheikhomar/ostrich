@@ -36,11 +36,6 @@ namespace ostrich.Core.Processors
                 UI.DisplayAdminCommandNotFoundMessage(command);
         }
 
-        public static bool CanProcess(string commandName)
-        {
-            return !string.IsNullOrWhiteSpace(commandName) && commandName.StartsWith(":");
-        }
-
         private void ToggleActivePropertyForProduct(CommandArgumentCollection args, bool isActive)
         {
             if (args.Count != 2)

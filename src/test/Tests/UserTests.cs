@@ -78,9 +78,10 @@ namespace ostrich.Tests
         }
 
         [TestCase("example@domain.com", Result = "example@domain.com")]
-        [TestCase("-@domain.com", Result = "-@domain.com")]
-        [TestCase("_@domain.com", Result = "_@domain.com")]
-        [TestCase(".@domain.com", Result = ".@domain.com")]
+        [TestCase("example@student.aau.dk", Result = "example@student.aau.dk")]
+        [TestCase("Donald-Duck@example.com", Result = "Donald-Duck@example.com")]
+        [TestCase("sam_walder_2014@grill.com", Result = "sam_walder_2014@grill.com")]
+        [TestCase("duck.duck@gmail.co.uk", Result = "duck.duck@gmail.co.uk")]
         public string Email_should_be_valid_when_value_is(string email)
         {
             var user = new User(1, "Homer", "Simpson", "home_sim");
@@ -96,6 +97,7 @@ namespace ostrich.Tests
         [TestCase("example@domain.com-")]
         [TestCase("example@.domain.com")]
         [TestCase("example@-domain.com")]
+        [TestCase("example@domain")]
         public void Email_should_be_invalid_when_value_is(string email)
         {
             var user = new User(1, "Homer", "Simpson", "home_sim");

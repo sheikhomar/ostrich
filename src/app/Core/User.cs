@@ -10,7 +10,7 @@ namespace ostrich.Core
 
         private static readonly Regex UserNameValidCharsRegex = new Regex("^[a-z0-9_]+$", RegexOptions.Compiled);
         private static readonly Regex EmailCheckerRegex = new Regex(
-            "^[a-z0-9_.-]+@[a-z0-9_][a-z0-9_.-]+[a-z0-9_]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            "^[a-z0-9_.-]+@[a-z0-9_][a-z0-9_.-]+[.][a-z0-9_]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private string email;
 
         public User(int userId, string firstName, string lastName, string userName)

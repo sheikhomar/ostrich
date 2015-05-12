@@ -44,7 +44,7 @@ namespace ostrich.Core.Processors
                 return;
             }
 
-            var productId = args.GetAsInt(1);
+            int? productId = args.GetAsInt(1);
             if (productId == null || productId.Value < 1)
             {
                 UI.DisplayGeneralError("Product ID must be a positive integer.");

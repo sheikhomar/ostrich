@@ -7,7 +7,6 @@ namespace ostrich.Core
 {
     public class TransactionFileStore : ITransactionStore
     {
-
         public TransactionFileStore(string filePath)
         {
             if (filePath == null) 

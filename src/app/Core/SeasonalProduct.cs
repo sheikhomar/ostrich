@@ -39,9 +39,9 @@ namespace ostrich.Core
             get
             {
                 DateTime now = DateTime.Now;
-                bool seasonBegan = SeasonStartsAt == null || now >= SeasonStartsAt;
+                bool seasonStarted = SeasonStartsAt == null || now >= SeasonStartsAt;
                 bool seasonNotEnded = SeasonEndsAt == null || now <= SeasonEndsAt;
-                return seasonBegan && seasonNotEnded;
+                return seasonStarted && seasonNotEnded;
             }
             set { throw new InvalidOperationException("Active property cannot be set for seasonal products."); }
         }

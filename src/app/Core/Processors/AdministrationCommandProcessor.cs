@@ -55,7 +55,7 @@ namespace ostrich.Core.Processors
             {
                 Product product = System.GetProduct(productId.Value);
                 if (product is SeasonalProduct)
-                    UI.DisplayGeneralError("Cannot change activate or deactivate seasonal product.");
+                    UI.DisplayGeneralError("Cannot activate or deactivate seasonal product.");
                 else
                     product.Active = isActive;
             }

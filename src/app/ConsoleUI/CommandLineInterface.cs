@@ -18,8 +18,8 @@ namespace ostrich.ConsoleUI
             do
             {
                 Console.Write("# ");
-                ParsingResult result = parser.Parse(Console.ReadLine());
-                result.Execute();
+                ParsingResult r = parser.Parse(Console.ReadLine());
+                r.Processor.Process(r.Arguments);
             } while (running);
         }
 

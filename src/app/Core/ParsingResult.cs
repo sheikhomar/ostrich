@@ -17,10 +17,5 @@ namespace ostrich.Core
 
         public ICommandProcessor Processor { get; private set; }
         public CommandArgumentCollection Arguments { get; private set; }
-
-        public void Execute()
-        {
-            Processor.Process(Arguments);
-        }
     }
 }

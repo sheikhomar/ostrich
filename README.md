@@ -14,8 +14,3 @@ Build status on Linux (Mono): [![Build Status](https://magnum.travis-ci.com/shei
 
     build.cmd    # build on Windows
     ./build.sh   # build on Linux
-
-### Missing features
-
-   * Make QuickBuy functionality more smooth
-   * Add tests for CommandParser.

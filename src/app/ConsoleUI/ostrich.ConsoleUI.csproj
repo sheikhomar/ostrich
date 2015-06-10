@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram.cd" />
     <None Include="products.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

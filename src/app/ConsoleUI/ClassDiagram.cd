@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ostrich.ConsoleUI.CommandLineInterface" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>YgAAAAAAACAAgCgAAAiAAAAACAiAAAEBAAABAACAAAA=</HashCode>
+      <FileName>CommandLineInterface.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ostrich.Core.Processors.AdministrationCommandProcessor" Collapsed="true">
+    <Position X="7.5" Y="10.5" Width="2.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.Processors.InvalidCommandProcessor" Collapsed="true">
+    <Position X="13.5" Y="10.5" Width="2.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.Processors.QuickBuyCommandProcessor" Collapsed="true">
+    <Position X="10.5" Y="10.5" Width="2.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.Processors.UserDetailsCommandProcessor" Collapsed="true">
+    <Position X="4.5" Y="10.5" Width="2.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.CommandProcessor">
+    <Position X="9" Y="7.75" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ostrich.Core.DefaultBackendSystem" Collapsed="true">
+    <Position X="4" Y="3.25" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ostrich.Core.TransactionFileStore" Collapsed="true">
+    <Position X="11.5" Y="2.25" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ostrich.Core.ParsingResult">
+    <Position X="0.5" Y="6.25" Width="3" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.CommandParser">
+    <Position X="0.5" Y="9" Width="3" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.ProductCatalogImporter">
+    <Position X="6.5" Y="3.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.TransactionManager">
+    <Position X="11.5" Y="3.25" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.UserRepository">
+    <Position X="9" Y="1.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.SeasonalProduct" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.Transaction">
+    <Position X="15" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.User" Collapsed="true">
+    <Position X="9" Y="0.5" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ostrich.Core.CsvReader" Collapsed="true">
+    <Position X="6.5" Y="2.75" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.Product" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.InsertCashTransaction">
+    <Position X="16.25" Y="4.25" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.BuyTransaction">
+    <Position X="14" Y="4.25" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ostrich.Core.CommandArgumentCollection" Collapsed="true">
+    <Position X="0.5" Y="8.25" Width="3" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ostrich.Core.ICommandProcessor">
+    <Position X="9" Y="6.25" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ostrich.Core.IUserInterface">
+    <Position X="0.5" Y="0.5" Width="3" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ostrich.Core.IBackendSystem">
+    <Position X="4" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ostrich.Core.ITransactionStore">
+    <Position X="11.5" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="ostrich.Core.CommandType">
+    <Position X="6.5" Y="6.25" Width="2" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

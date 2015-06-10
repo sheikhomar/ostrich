@@ -4,7 +4,7 @@ A console based system that replicates some of the functionality of [Fklub Streg
 
 Building ostrich
 ----------------
-Build status on Linux (Mono): [![Build Status](https://magnum.travis-ci.com/sheikhomar/ostrich.svg?token=VhLSAzQCPvZKE9f8UDxP&branch=master)](https://magnum.travis-ci.com/sheikhomar/ostrich)
+Build status on Linux (Mono): [![Build Status](https://travis-ci.org/sheikhomar/ostrich.svg?branch=master)](https://travis-ci.org/sheikhomar/ostrich)
 
 ### Building solution with XBuild
 

@@ -17,7 +17,7 @@ namespace ostrich.Core
         public override void Execute()
         {
             int newBalance = User.Balance + Amount;
-            if (newBalance < 0)
+            if (User.Balance > 0 && newBalance < 0)
                 throw new BalanceOverflowException(User, newBalance);
 
             User.Balance += Amount;

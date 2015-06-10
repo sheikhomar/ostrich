@@ -48,9 +48,20 @@ namespace ostrich.Tests
         {
             var user = new User(1, "Mr.", "Burns", "evilcorp111one") { Balance = int.MaxValue };
             var transaction = new InsertCashTransaction(1, user, DateTime.Now, 1);
-            
+
             Assert.Throws<BalanceOverflowException>(() => transaction.Execute());
             Assert.AreEqual(int.MaxValue, user.Balance);
+        }
+
+        [Test]
+        public void Execute_should_not_overflow_when_balance_is_negative()
+        {
+            var user = new User(1, "Anders", "And", "wacky") { Balance = -1000 };
+            var transaction = new InsertCashTransaction(1, user, DateTime.Now, 999);
+
+            transaction.Execute();
+
+            Assert.AreEqual(-1, user.Balance);
         }
 
         [Test]

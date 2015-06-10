@@ -16,7 +16,6 @@ namespace ostrich.Core
             
             ProductID = productId;
             Name = name;
-            Price = price;
         }
 
         public int ProductID { get; private set; }
